@@ -92,7 +92,7 @@ public class ObjectManager {
 				worldY - gp.tileSize< gp.player.worldY + gp.player.screenY) {
 				
 				if ( objectNum == 1 ) {
-					g2.drawImage( object[objectNum].image, OscreenX, OscreenY, gp.tileSize, gp.tileSize*2, null);
+					g2.drawImage( object[objectNum].image, OscreenX, OscreenY, gp.tileSize*2, gp.tileSize*4, null);
 				}else {
 					g2.drawImage( object[objectNum].image, OscreenX, OscreenY, gp.tileSize, gp.tileSize, null);
 

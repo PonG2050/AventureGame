@@ -50,9 +50,10 @@ public class Player extends Entity{
 			right2 = ImageIO.read(getClass().getResourceAsStream("/player/right2.png"));
 			left1 = ImageIO.read(getClass().getResourceAsStream("/player/left1.png"));
 			left2 = ImageIO.read(getClass().getResourceAsStream("/player/left2.png"));
-	        for (int i = 0; i < 10; i++) {
+			for (int i = 0; i < 10; i++) {
 	            stand[i] = ImageIO.read(getClass().getResourceAsStream("/player/stand" + (i+1) + ".png"));
 	        }
+
 
 		}catch(IOException e) {
 			e.printStackTrace();
@@ -134,7 +135,11 @@ public class Player extends Entity{
 			break;
 			
 		}
+		if (keyH.ZoomOUT == true) {
+			g2.drawImage(image, screenX, screenY, gp.tileSize/2, gp.tileSize/2, null);
+
+		}else {
 		g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);
-		
+		}
 			}
 }

@@ -67,6 +67,7 @@ public class GamePanel extends JPanel implements Runnable{
 	        if (delta >= 1) {
 	        	
 	            update();
+	            System.out.println("Running");
 	            repaint();
 	            delta--;
 	            
