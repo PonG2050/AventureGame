@@ -3,19 +3,18 @@ package Main;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-public class KeyHandler implements KeyListener{
+public class KeyHandler implements KeyListener {
 
-	public boolean Up, Down, Left, Right, ZoomIN, ZoomOUT;
-	
+	public boolean Up, Down, Left, Right, HitBox = false;
+
 	@Override
 	public void keyTyped(KeyEvent e) {
 	}
 
-	
 	@Override
 	public void keyPressed(KeyEvent e) {
 		int code = e.getKeyCode();
-		
+
 		if (code == KeyEvent.VK_W) {
 			Up = true;
 		}
@@ -30,18 +29,18 @@ public class KeyHandler implements KeyListener{
 		if (code == KeyEvent.VK_D) {
 			Right = true;
 		}
-		if (code == KeyEvent.VK_I) {
-			ZoomIN = true;
+		if (code == KeyEvent.VK_F3) {
+			if (HitBox == false) {
+				HitBox = true;
+			} else HitBox = false;
 		}
-		if (code == KeyEvent.VK_O) {
-			ZoomOUT = true;
-		} 
 
 	}
+
 	@Override
 	public void keyReleased(KeyEvent e) {
 		int code = e.getKeyCode();
-		
+
 		if (code == KeyEvent.VK_W) {
 			Up = false;
 		}
@@ -56,11 +55,6 @@ public class KeyHandler implements KeyListener{
 		if (code == KeyEvent.VK_D) {
 			Right = false;
 		}
-		if (code == KeyEvent.VK_I) {
-			ZoomIN = false;
-		}
-		if  (code == KeyEvent.VK_O) {
-			ZoomOUT = false;
-		}
+
 	}
 }

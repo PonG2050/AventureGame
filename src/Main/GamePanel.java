@@ -7,90 +7,156 @@ import java.awt.Graphics2D;
 
 import javax.swing.JPanel;
 
+import entity.Entity;
 import entity.Player;
-import object.ObjectManager;
+import object.SuperObject;
 import tile.TileManager;
 
-public class GamePanel extends JPanel implements Runnable{
-	
-	final int originalTileSize = 16;
-	final int scale = 3;
-	//screen settings
+public class GamePanel extends JPanel implements Runnable {
+
+	public final int originalTileSize = 16;
+	public final int scale = 2;
+	// screen settings
 	public final int tileSize = originalTileSize * scale;
-	public final int maxScreenCol = 16;
-	public final int maxScreenRow = 12;
+	public final int maxScreenCol = 32;
+	public final int maxScreenRow = 20;
 	public final int screenWidth = tileSize * maxScreenCol;
 	public final int screenHeight = tileSize * maxScreenRow;
-	//world settings
-	public final int maxWorldCol = 90;
-	public final int maxWorldRow = 90;
+	// world settings
+	public final int maxWorldCol = 50;
+	public final int maxWorldRow = 50;
 	public final int worldWidth = tileSize * maxWorldCol;
 	public final int worldHeight = tileSize * maxWorldRow;
-	
-	int FPS = 60;
-	
+
+	private int FPS = 60;
+
 	TileManager tileM = new TileManager(this);
-	ObjectManager objectM = new ObjectManager(this);
-	KeyHandler keyH = new KeyHandler();
-	Thread gameThread;
-	public Player player = new Player(this,keyH);
+	public KeyHandler keyH = new KeyHandler();
+	Sound music = new Sound();
+	Sound soundEffect = new Sound();
 	
+	public Player player = new Player(this, keyH);
+	public CollisionCheck cChecker = new CollisionCheck(this);
+	public SuperObject obj[] = new SuperObject[10];
+	public Entity monster[] = new Entity[10];
+	
+	public AssetSetter aSetter = new AssetSetter(this);
+	
+	Thread gameThread;
+
 	public GamePanel() {
-		
+
 		this.setPreferredSize(new Dimension(screenWidth, screenHeight));
 		this.setBackground(Color.black);
 		this.setDoubleBuffered(true);
 		this.addKeyListener(keyH);
 		this.setFocusable(true);
 	}
-	
-	public void startGameThread() {
+
+	public void setupGame() {
 		
-		gameThread = new Thread(this);
-		gameThread.start();
+		aSetter.setObject();
+		aSetter.setMonster();
 		
 	}
+	public void startGameThread() {
+
+		gameThread = new Thread(this);
+		gameThread.start();
+
+	}
+
 	@Override
 	public void run() {
 
-	    double drawInterval = 1000000000.0 / FPS;
-	    double delta = 0;
-	    long lastTime = System.nanoTime();
-	    long currentTime;
+		double drawInterval = 1000000000.0 / FPS;
+		double delta = 0;
+		long lastTime = System.nanoTime();
+		long currentTime;
 
-	    while (gameThread != null) {
+		while (gameThread != null) {
 
-	        currentTime = System.nanoTime();
-	        delta += (currentTime - lastTime) / drawInterval;
-	        lastTime = currentTime;
+			currentTime = System.nanoTime();
+			delta += (currentTime - lastTime) / drawInterval;
+			lastTime = currentTime;
 
-	        if (delta >= 1) {
-	        	
-	            update();
-	            System.out.println("Running");
-	            repaint();
-	            delta--;
-	            
-	        }
+			if (delta >= 1) {
 
-	    }
+				update();
+				repaint();
+				delta--;
+
+			}
+
+		}
 	}
+
 	public void update() {
 
 		player.update();
-		
+		for (int i = 0; i < obj.length; i++) {
+			if (obj[i] != null) {
+				(obj[i]).update();
+			}
+		}
+		for (int i = 0; i < monster.length; i++) {
+			if (monster[i] != null) {
+				monster[i].update();
+			}
+		}
 	}
-	
+
 	public void paintComponent(Graphics g) {
-		
+
 		super.paintComponent(g);
-		
-		Graphics2D g2 = (Graphics2D)g;
-				
+		Graphics2D g2 = (Graphics2D) g;
+
 		tileM.draw(g2);
-		objectM.draw(g2);
+
+		for (int i = 0; i < monster.length; i++) {
+			if (monster[i] != null) {
+				monster[i].draw(g2);
+			}
+		}
+		
+		
+		int p_BottomY = player.worldY + player.solidArea.y + player.solidArea.height;
+		
+		for( int i = 0; i < obj.length; i++) {
+			if (obj[i] != null) {
+				int o_BottomY = obj[i].worldY + obj[i].solidArea.y + obj[i].solidArea.height;
+				if (o_BottomY < p_BottomY) {
+					obj[i].draw(g2, this);
+				}
+			}
+		}
+		
 		player.draw(g2);
-				
+		
+		for( int i = 0; i < obj.length; i++) {
+			if (obj[i] != null) {
+				int o_BottomY = obj[i].worldY + obj[i].solidArea.y + obj[i].solidArea.height;
+				if (o_BottomY >= p_BottomY) {
+					obj[i].draw(g2, this);
+				}
+			}
+		}
+		
 		g2.dispose();
+	}
+	public void playMusic(int i) {
+		
+		music.setFile(i);
+		music.play();
+		music.loop();
+	}
+	public void stopMusic() {
+		
+		music.stop();
+	}
+	public void playSE(int i) {
+		
+		soundEffect.setFile(i);
+		soundEffect.play();
 	}
 }
