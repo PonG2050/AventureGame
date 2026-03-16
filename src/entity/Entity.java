@@ -15,6 +15,7 @@ public class Entity {
 	public int worldX, worldY;
 	public int speed, scale;
 	public boolean isMoving = false;
+	public int recovery = 60;
 	
 	public Rectangle solidArea;
 	public int solidAreaDefaultX, solidAreaDefaultY;

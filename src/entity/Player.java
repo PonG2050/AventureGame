@@ -71,8 +71,8 @@ public class Player extends Entity {
 
 	}
 	public BufferedImage getPlayerSubImage(int row, int maxCol) {
-	    if (col > maxCol) { 
-	        col = 0; 
+	    if (col > maxCol) {
+	        col = 0;
 	    }
 	    BufferedImage subImage = sheet.getSubimage(col * width, row * height, width, height);
 	    if (col >= maxCol) {
@@ -82,7 +82,33 @@ public class Player extends Entity {
 	    }
 	    return subImage;
 	}
-
+	public void getPlayerIdle() {
+		switch (direction) {
+		case "up":image = getPlayerSubImage(7, 5);break;
+		case "down":image = getPlayerSubImage(0, 5);break;
+		case "right":image = getPlayerSubImage(2, 5);break;
+		case "left":image = getPlayerSubImage(4, 5);break;
+		case "idle":image = getPlayerSubImage(0, 5);break;
+		}
+	}
+	public void getPlayerMovement() {
+		switch (direction) {
+		case "up":image = getPlayerSubImage(6, 5);break;
+		case "down":image = getPlayerSubImage(1, 5);break;
+		case "right":image = getPlayerSubImage(3, 5);break;
+		case "left":image = getPlayerSubImage(5, 5);break;
+		}
+	}
+	public void getPlayerAction() {
+		if (mouseL.leftClick == true) {
+			switch (direction) {
+			case "up":image = getPlayerSubImage(11, 3);break;
+			case "down":image = getPlayerSubImage(8, 3);break;
+			case "right":image = getPlayerSubImage(9, 3);break;
+			case "left":image = getPlayerSubImage(10, 3);break;
+			}
+		}
+	}
 	public void update() {
 		isMoving = false;
 	    
@@ -132,53 +158,16 @@ public class Player extends Entity {
 		spriteCounter++;
 		if (spriteCounter > 4) {
 			spriteCounter = 0;
-
-			// idle
-			if (isMoving == false) {
-				
-		        if (direction.equals("up")) {
-		        	
-		        	if (mouseL.leftClick) {image = getPlayerSubImage(11, 3);} 
-		        	else {image = getPlayerSubImage(7, 5);}
-		        	
-		        }else if (direction.equals("down")) {
-		        	
-		        	if (mouseL.leftClick) {image = getPlayerSubImage(8, 3);} 
-		        	else {image = getPlayerSubImage(0, 5);}
-		        	
-		        }else if (direction.equals("left")) {
-		        	
-		        	if (mouseL.leftClick) {image = getPlayerSubImage(10, 3);} 
-		        	else {image = getPlayerSubImage(4, 5);}
-		        	
-		        }else if (direction.equals("right")) {
-		        	
-		        	if (mouseL.leftClick) {image = getPlayerSubImage(9, 3);} 
-		        	else {image = getPlayerSubImage(2, 5);}
-		        	
-		        }else if (direction.equals("idle")) {
-		        	
-		        	if (mouseL.leftClick) {image = getPlayerSubImage(8, 3);} 
-		        	else {image = getPlayerSubImage(0, 5);}
-		        	
-		        }
-			} else {
-		        if (direction.equals("up")) {
-		        	image = getPlayerSubImage(6, 5);
-		        }
-		        else if (direction.equals("down")) {
-		        	image = getPlayerSubImage(1, 5);
-		        }
-		        else if (direction.equals("left")) {
-		        	image = getPlayerSubImage(5, 5);
-		        }
-		        else if (direction.equals("right")) {
-		        	image = getPlayerSubImage(3, 5);
-		        }
+			if (mouseL.leftClick == true) {
+				getPlayerAction();
+			} else if (isMoving){
+				getPlayerMovement();
+			} else if (isMoving == false) {
+				getPlayerIdle();
 			}
 		}
+		
 	}
-
 	public void pickupObject(int i) {
 		if (i != 999) {
 			if (gp.obj[i] != null) {
@@ -204,7 +193,6 @@ public class Player extends Entity {
 					gp.obj[i].interacting = true;
 					System.out.println("open chest");
 				}
-
 				break;
 				}				
 			}
