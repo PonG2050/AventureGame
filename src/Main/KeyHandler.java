@@ -2,10 +2,11 @@ package Main;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
 
 public class KeyHandler implements KeyListener {
 
-	public boolean Up, Down, Left, Right, HitBox = false;
+	public boolean Up, Down, Left, Right, Hit,  HitBox = false;
 
 	@Override
 	public void keyTyped(KeyEvent e) {
@@ -35,8 +36,8 @@ public class KeyHandler implements KeyListener {
 			} else HitBox = false;
 		}
 
-	}
 
+	}
 	@Override
 	public void keyReleased(KeyEvent e) {
 		int code = e.getKeyCode();
@@ -55,6 +56,6 @@ public class KeyHandler implements KeyListener {
 		if (code == KeyEvent.VK_D) {
 			Right = false;
 		}
-
 	}
+	
 }

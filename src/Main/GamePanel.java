@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.util.ArrayList;
+import java.util.Comparator;
 
 import javax.swing.JPanel;
 
@@ -32,13 +34,16 @@ public class GamePanel extends JPanel implements Runnable {
 
 	TileManager tileM = new TileManager(this);
 	public KeyHandler keyH = new KeyHandler();
+	public MouseListener mouseL = new MouseListener();
 	Sound music = new Sound();
 	Sound soundEffect = new Sound();
 	
-	public Player player = new Player(this, keyH);
+	public Player player = new Player(this, keyH, mouseL);
 	public CollisionCheck cChecker = new CollisionCheck(this);
 	public SuperObject obj[] = new SuperObject[10];
 	public Entity monster[] = new Entity[10];
+	
+	ArrayList<Entity> entityList = new ArrayList<>();
 	
 	public AssetSetter aSetter = new AssetSetter(this);
 	
@@ -50,6 +55,7 @@ public class GamePanel extends JPanel implements Runnable {
 		this.setBackground(Color.black);
 		this.setDoubleBuffered(true);
 		this.addKeyListener(keyH);
+		this.addMouseListener(mouseL);
 		this.setFocusable(true);
 	}
 
@@ -113,35 +119,27 @@ public class GamePanel extends JPanel implements Runnable {
 
 		tileM.draw(g2);
 
+		//ADD ENTITIES
+		entityList.add(player);
 		for (int i = 0; i < monster.length; i++) {
 			if (monster[i] != null) {
-				monster[i].draw(g2);
+				entityList.add(monster[i]);
 			}
 		}
-		
-		
-		int p_BottomY = player.worldY + player.solidArea.y + player.solidArea.height;
-		
 		for( int i = 0; i < obj.length; i++) {
 			if (obj[i] != null) {
-				int o_BottomY = obj[i].worldY + obj[i].solidArea.y + obj[i].solidArea.height;
-				if (o_BottomY < p_BottomY) {
-					obj[i].draw(g2, this);
-				}
+				entityList.add(obj[i]);
 			}
 		}
-		
-		player.draw(g2);
-		
-		for( int i = 0; i < obj.length; i++) {
-			if (obj[i] != null) {
-				int o_BottomY = obj[i].worldY + obj[i].solidArea.y + obj[i].solidArea.height;
-				if (o_BottomY >= p_BottomY) {
-					obj[i].draw(g2, this);
-				}
-			}
+		entityList.sort((entity1, entity2) -> {
+			int value1 = entity1.worldY + entity1.solidArea.y + entity1.solidArea.height;
+			int value2 = entity2.worldY + entity2.solidArea.y + entity2.solidArea.height;
+			return Integer.compare(value1, value2);
+		});
+		for (int i = 0; i < entityList.size(); i++) {
+			entityList.get(i).draw(g2);
 		}
-		
+		entityList.clear();
 		g2.dispose();
 	}
 	public void playMusic(int i) {

@@ -2,26 +2,26 @@ package object;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
 import Main.GamePanel;
+import entity.Entity;
 
-public class SuperObject {
-	BufferedImage image;
-	BufferedImage sheet; 
+public class SuperObject extends Entity{
+	public SuperObject(GamePanel gp) {
+		super(gp);
+	}
 	public String name;
-	public boolean collision = false;
 	public boolean interacting = false;
-	public int worldX, worldY;
-	public int width, height;
-	public Rectangle solidArea = new Rectangle();
+	int objectWidthSize;
+	int objectHeightSize;
 	
-	public int solidAreaDefaultX = 0, solidAreaDefaultY = 0;
 	public void update() {
 		
 	}
-	public void draw(Graphics2D g2, GamePanel gp) {
+	
+	@Override
+	public void draw(Graphics2D g2) {
 		
 		int screenX = worldX - gp.player.worldX + gp.player.screenX;
 		int screenY = worldY - gp.player.worldY + gp.player.screenY;
