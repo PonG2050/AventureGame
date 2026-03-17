@@ -42,11 +42,22 @@ public class Entity {
 		
 	}
 	public void update() {
-		
-		action();
-		collisionOn = false;
-		gp.cChecker.checkTile(this);
-		gp.cChecker.checkObject(this, false);
+	    action();
+
+	    collisionOn = false;
+	    gp.cChecker.checkTile(this);
+	    gp.cChecker.checkObject(this, false);
+
+	    if (isMoving && !collisionOn) {
+	        switch (direction) {
+	            case "up":    worldY -= speed; break;
+	            case "down":  worldY += speed; break;
+	            case "left":  worldX -= speed; break;
+	            case "right": worldX += speed; break;
+	        }
+	    }
+
+	    spriteCounter++;
 	}
 	public void draw(Graphics2D g2) {
 		
