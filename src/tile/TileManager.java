@@ -5,6 +5,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -15,105 +17,89 @@ public class TileManager {
 
 	GamePanel gp;
 	public Tile[] tile;
-	public int mapTileNum[][];
+	public Tile[][] worldMap;
+	HashMap<String, Tile[]> tileRegistry = new HashMap<>();
 
 	public TileManager(GamePanel gp) {
 
 		this.gp = gp;
 		tile = new Tile[100];
-		mapTileNum = new int[gp.maxWorldCol][gp.maxWorldRow];
 		getTileImage();
 		loadMap("/maps/World01.txt");
 	}
-	public void getSheetComponent (int x, int y, int maxCol, Tile tile[],BufferedImage sheet,boolean collision) {
-		// start, end, colNum, tile, sheet, collision
-		int index = x;
-		int col = 0;
+	//CREAT THE METHOD TO SUBIMAGE, ADD IN THE ARRAY TO SUPPORT THE HASHMAP
+	public Tile[] cutSheet(int maxCol, BufferedImage sheet, int numTiles, boolean collision) {
+		Tile[] subTiles = new Tile[numTiles];
 		int row = 0;
-		while (index < y) {
-			tile[index] = new Tile();
-			int positionX = col * gp.originalTileSize;
-			int positionY = row * gp.originalTileSize;
-			tile[index].image = sheet.getSubimage(positionX, positionY, gp.originalTileSize, gp.originalTileSize);
-			tile[index].collision = collision;
-			index++;
+		int col = 0;
+		for (int i = 0; i < numTiles; i++) {
+			subTiles[i] = new Tile();
+			subTiles[i].image = sheet.getSubimage(col * gp.originalTileSize, row * gp.originalTileSize, gp.originalTileSize, gp.originalTileSize);
+			subTiles[i].collision = collision;
 			col++;
 			if (col == maxCol) {
 				col = 0;
 				row++;
 			}
 		}
+		
+		return subTiles;
 	}
+	//GET SPRITES AND ADD IN HASHMAP
 	public void getTileImage() {
+	    try {
+	        tileRegistry.put("grass", cutSheet(1, ImageIO.read(getClass().getResourceAsStream("/tiles/grass.png")), 1, false));
+	        tileRegistry.put("water_mid", cutSheet(1, ImageIO.read(getClass().getResourceAsStream("/tiles/Water_Middle.png")), 1, true));
+	        tileRegistry.put("path_mid", cutSheet(1, ImageIO.read(getClass().getResourceAsStream("/tiles/Path_Middle.png")), 1, false));
 
-		try {	
-			tile[0] = new Tile();
-			tile[0].image = ImageIO.read(getClass().getResourceAsStream("/tiles/grass.png"));
+	        
+	        BufferedImage cliffSheet = ImageIO.read(getClass().getResourceAsStream("/tiles/Cliff_Tile.png"));
+	        tileRegistry.put("cliff", cutSheet(3, cliffSheet, 18, true));
 
-			tile[1] = new Tile();
-			tile[1].image = ImageIO.read(getClass().getResource("/tiles/Water_Middle.png"));
-			tile[1].collision = true;
+	        BufferedImage farmSheet = ImageIO.read(getClass().getResourceAsStream("/tiles/FarmLand_Tile.png"));
+	        tileRegistry.put("farm", cutSheet(3, farmSheet, 9, false));
 
-			tile[2] = new Tile();
-			tile[2].image = ImageIO.read(getClass().getResource("/tiles/Path_Middle.png"));
+	        BufferedImage beachSheet = ImageIO.read(getClass().getResourceAsStream("/tiles/Beach_Tile.png"));
+	        tileRegistry.put("beach", cutSheet(5, beachSheet, 15, true));
 
-			// CLIFF TILES
-			BufferedImage sheet1 = ImageIO.read(getClass().getResourceAsStream("/tiles/Cliff_Tile.png"));
-			getSheetComponent(3, 21, 3, tile, sheet1, true);
+	        BufferedImage waterSheet = ImageIO.read(getClass().getResourceAsStream("/tiles/Water_Tile.png"));
+	        tileRegistry.put("water", cutSheet(3, waterSheet, 18, true));
 
-			
-			// FARM LAND TILES
-			BufferedImage sheet2 = ImageIO.read(getClass().getResourceAsStream("/tiles/FarmLand_Tile.png"));
-			getSheetComponent(21, 30, 3, tile, sheet2, false);
+	        BufferedImage pathSheet = ImageIO.read(getClass().getResourceAsStream("/tiles/Path_Tile.png"));
+	        tileRegistry.put("path", cutSheet(3, pathSheet, 18, false));
 
-			
-			//BEACH TILES
-			BufferedImage sheet3 = ImageIO.read(getClass().getResourceAsStream("/tiles/Beach_Tile.png"));
-			getSheetComponent(30, 45, 5, tile, sheet3, true);
-
-			// WATER TILES
-			BufferedImage sheet4 = ImageIO.read(getClass().getResourceAsStream("/tiles/Water_Tile.png"));
-			getSheetComponent(45, 63, 3, tile, sheet4, true);
-
-			// PATH TILES
-			BufferedImage sheet5 = ImageIO.read(getClass().getResourceAsStream("/tiles/Path_Tile.png"));
-			getSheetComponent(63, 81, 3, tile, sheet5, false);
-		} catch (IOException e) {
-			System.out.println("tile errors");
-		}
-	}
-
+	    } catch (IOException e) {
+	        System.out.println("get image errors " + e.getMessage());
+	    }
+	}	
 	public void loadMap(String filePath) {
+	    worldMap = new Tile[gp.maxWorldCol][gp.maxWorldRow];
+	    try {
+	        InputStream is = getClass().getResourceAsStream(filePath);
+	        BufferedReader br = new BufferedReader(new InputStreamReader(is));
 
-		try {
+	        int row = 0;
+	        while (row < gp.maxWorldRow) {
+	            String line = br.readLine();
+	            if (line == null) break;
 
-			InputStream is = getClass().getResourceAsStream(filePath);
-			BufferedReader br = new BufferedReader(new InputStreamReader(is));
+	            String tokens[] = line.split(" ");
 
-			int col = 0;
-			int row = 0;
+	            for (int col = 0; col < gp.maxWorldCol; col++) {
+	                String token = tokens[col]; 
+	                
+	                String[] parts = token.split(":");
+	                String category = parts[0];
+	                int index = Integer.parseInt(parts[1]);
 
-			while (col < gp.maxWorldCol && row < gp.maxWorldRow) {
-
-				String line = br.readLine();
-
-				while (col < gp.maxWorldCol) {
-
-					String numbers[] = line.split(" ");
-
-					int num = Integer.parseInt(numbers[col]);
-					mapTileNum[col][row] = num;
-					col++;
-				}
-				if (col == gp.maxWorldCol) {
-					col = 0;
-					row++;
-				}
-			}
-			br.close();
-		} catch (Exception e) {
-			System.out.println("map errors");
-		}
+	                worldMap[col][row] = tileRegistry.get(category)[index];
+	            }
+	            row++;
+	        }
+	        br.close();
+	    } catch (Exception e) {
+	        System.out.println("LoadMap erors: " + e.getMessage());
+	    }
 	}
 
 	public void update() {
@@ -121,34 +107,34 @@ public class TileManager {
 	}
 
 	public void draw(Graphics2D g2) {
+	    int worldCol = 0;
+	    int worldRow = 0;
 
-		int worldCol = 0;
-		int worldRow = 0;
+	    while (worldCol < gp.maxWorldCol && worldRow < gp.maxWorldRow) {
+	        
+	        Tile currentTile = worldMap[worldCol][worldRow];
 
-		while (worldCol < gp.maxWorldCol && worldRow < gp.maxWorldRow) {
+	        int worldX = worldCol * gp.tileSize;
+	        int worldY = worldRow * gp.tileSize;
+	        int screenX = worldX - gp.player.worldX + gp.player.screenX;
+	        int screenY = worldY - gp.player.worldY + gp.player.screenY;
 
-			int tileNum = mapTileNum[worldCol][worldRow];
+	        if (worldX + gp.tileSize > gp.player.worldX - gp.player.screenX &&
+	            worldX - gp.tileSize < gp.player.worldX + gp.player.screenX &&
+	            worldY + gp.tileSize > gp.player.worldY - gp.player.screenY &&
+	            worldY - gp.tileSize < gp.player.worldY + gp.player.screenY) {
 
-			int worldX = worldCol * gp.tileSize;
-			int worldY = worldRow * gp.tileSize;
-			int screenX = worldX - gp.player.worldX + gp.player.screenX;
-			int screenY = worldY - gp.player.worldY + gp.player.screenY;
-
-			if (worldX + gp.tileSize > gp.player.worldX - gp.player.screenX &&
-				worldX - gp.tileSize < gp.player.worldX + gp.player.screenX &&
-				worldY + gp.tileSize > gp.player.worldY - gp.player.screenY &&
-				worldY - gp.tileSize < gp.player.worldY + gp.player.screenY) {
-
-				g2.drawImage(tile[tileNum].image, screenX, screenY, gp.tileSize, gp.tileSize, null);
-
-			}
-			worldCol++;
-			if (worldCol == gp.maxWorldCol) {
-				worldCol = 0;
-				worldRow++;
-			}
-		}
-
+	            if (currentTile != null && currentTile.image != null) {
+	                g2.drawImage(currentTile.image, screenX, screenY, gp.tileSize, gp.tileSize, null);
+	            }
+	        }
+	        
+	        worldCol++;
+	        if (worldCol == gp.maxWorldCol) {
+	            worldCol = 0;
+	            worldRow++;
+	        }
+	    }
 	}
 
 }
