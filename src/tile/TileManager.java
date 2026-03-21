@@ -49,6 +49,12 @@ public class TileManager {
 			// CLIFF TILES
 			BufferedImage sheet = ImageIO.read(getClass().getResourceAsStream("/tiles/TileSheet.png"));
 			getSheetComponent(0, 999, 20, tile, sheet, false);
+			
+			int[] collisionList = {128, 129, 130, 131, 132, 133, 148, 149, 150, 151, 152, 153, 168, 169, 170, 171, 172, 173, 188, 189, 190, 191, 192, 193, 198, 199, 200, 201, 202, 203, 208, 209, 210, 211, 212, 213, 660, 661, 662, 663, 664, 665, 666, 667};
+			for (int i = 0; i < collisionList.length; i++) {
+				tile[collisionList[i]].collision = true;
+			}
+			
 		} catch (IOException e) {
 			System.out.println("tile errors");
 		}
