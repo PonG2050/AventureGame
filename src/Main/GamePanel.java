@@ -31,6 +31,12 @@ public class GamePanel extends JPanel implements Runnable {
 	public final int worldHeight = tileSize * maxWorldRow;
 
 	private int FPS = 60;
+	
+	//GAME STATE
+	public int gameState;
+	public final int titleState = 0;
+	public final int playState = 1;
+	public final int pauseState = 2;
 
 	TileManager tileM = new TileManager(this);
 	public KeyHandler keyH = new KeyHandler();
@@ -42,6 +48,7 @@ public class GamePanel extends JPanel implements Runnable {
 	public CollisionCheck cChecker = new CollisionCheck(this);
 	public SuperObject obj[] = new SuperObject[10];
 	public Entity monster[] = new Entity[10];
+	public UI ui = new UI(this);
 	
 	ArrayList<Entity> entityList = new ArrayList<>();
 	
@@ -61,9 +68,10 @@ public class GamePanel extends JPanel implements Runnable {
 
 	public void setupGame() {
 		
+		gameState = titleState;
+		
 		aSetter.setObject();
 		aSetter.setMonster();
-		
 	}
 	public void startGameThread() {
 
@@ -140,6 +148,9 @@ public class GamePanel extends JPanel implements Runnable {
 			entityList.get(i).draw(g2);
 		}
 		entityList.clear();
+		
+		ui.draw(g2);
+		
 		g2.dispose();
 	}
 	public void playMusic(int i) {
