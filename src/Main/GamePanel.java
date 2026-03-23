@@ -39,7 +39,7 @@ public class GamePanel extends JPanel implements Runnable {
 	public final int pauseState = 2;
 
 	TileManager tileM = new TileManager(this);
-	public KeyHandler keyH = new KeyHandler();
+	public KeyHandler keyH = new KeyHandler(this);
 	public MouseListener mouseL = new MouseListener();
 	Sound music = new Sound();
 	Sound soundEffect = new Sound();
@@ -106,18 +106,25 @@ public class GamePanel extends JPanel implements Runnable {
 	}
 
 	public void update() {
-
-		player.update();
-		for (int i = 0; i < obj.length; i++) {
-			if (obj[i] != null) {
-				(obj[i]).update();
+		//TITLE STATE
+		if (gameState == titleState) {
+			ui.updateTitleState();
+		}
+		//PLAY STATE 
+		if (gameState == playState) {
+			player.update();
+			for (int i = 0; i < obj.length; i++) {
+				if (obj[i] != null) {
+					(obj[i]).update();
+				}
+			}
+			for (int i = 0; i < monster.length; i++) {
+				if (monster[i] != null) {
+					monster[i].update();
+				}
 			}
 		}
-		for (int i = 0; i < monster.length; i++) {
-			if (monster[i] != null) {
-				monster[i].update();
-			}
-		}
+		if (gameState == pauseState) {}
 	}
 
 	public void paintComponent(Graphics g) {
@@ -127,7 +134,7 @@ public class GamePanel extends JPanel implements Runnable {
 
 		tileM.draw(g2);
 
-		//ADD ENTITIES
+		//ENTITY AND OBJECT PAINT SETTING
 		entityList.add(player);
 		for (int i = 0; i < monster.length; i++) {
 			if (monster[i] != null) {
@@ -149,7 +156,16 @@ public class GamePanel extends JPanel implements Runnable {
 		}
 		entityList.clear();
 		
-		ui.draw(g2);
+		//UI PAINT SETTING
+		if (gameState == titleState) {
+			ui.drawTitleState(g2);
+		}
+		if (gameState == playState) {
+			ui.drawPlayState(g2);
+		}
+		if (gameState == pauseState) {
+			ui.drawPauseState(g2);
+		}
 		
 		g2.dispose();
 	}

@@ -2,11 +2,13 @@ package Main;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.event.MouseEvent;
 
 public class KeyHandler implements KeyListener {
-
+	GamePanel gp;
 	public boolean Up, Down, Left, Right, Hit,  HitBox = false;
+	public KeyHandler(GamePanel gp) {
+		this.gp = gp;
+	}
 
 	@Override
 	public void keyTyped(KeyEvent e) {
@@ -31,9 +33,10 @@ public class KeyHandler implements KeyListener {
 			Right = true;
 		}
 		if (code == KeyEvent.VK_F3) {
-			if (HitBox == false) {
-				HitBox = true;
-			} else HitBox = false;
+			HitBox = (HitBox == false) ? true : false;
+		}
+		if (code == KeyEvent.VK_ESCAPE) {
+			gp.gameState = (gp.gameState == gp.playState) ? gp.pauseState : gp.playState;
 		}
 
 
