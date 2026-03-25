@@ -9,6 +9,7 @@ import java.util.Comparator;
 
 import javax.swing.JPanel;
 
+import UI.UIManager;
 import entity.Entity;
 import entity.Player;
 import object.SuperObject;
@@ -48,7 +49,7 @@ public class GamePanel extends JPanel implements Runnable {
 	public CollisionCheck cChecker = new CollisionCheck(this);
 	public SuperObject obj[] = new SuperObject[10];
 	public Entity monster[] = new Entity[10];
-	public UI ui = new UI(this);
+	public UIManager ui = new UIManager(this);
 	
 	ArrayList<Entity> entityList = new ArrayList<>();
 	
@@ -108,7 +109,7 @@ public class GamePanel extends JPanel implements Runnable {
 	public void update() {
 		//TITLE STATE
 		if (gameState == titleState) {
-			ui.updateTitleState();
+			ui.update();
 		}
 		//PLAY STATE 
 		if (gameState == playState) {
@@ -156,16 +157,7 @@ public class GamePanel extends JPanel implements Runnable {
 		}
 		entityList.clear();
 		
-		//UI PAINT SETTING
-		if (gameState == titleState) {
-			ui.drawTitleState(g2);
-		}
-		if (gameState == playState) {
-			ui.drawPlayState(g2);
-		}
-		if (gameState == pauseState) {
-			ui.drawPauseState(g2);
-		}
+		ui.draw(g2);
 		
 		g2.dispose();
 	}

@@ -12,8 +12,8 @@ public class UIBackground extends UIComponent {
 	int spriteCounter = 0;
 	int currentFrames = 0;
 
-	public UIBackground(GamePanel gp, int x, int y, int width, int height) {
-		super(gp, x, y, width, height);
+	public UIBackground(GamePanel gp) {
+		super(gp, 0, 0, 630 + (14 * gp.tileSize), 500 + (14 * gp.tileSize));
 		frames = new BufferedImage[120];
 		loadFrames();
 	}

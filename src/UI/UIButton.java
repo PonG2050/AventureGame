@@ -24,5 +24,4 @@ public class UIButton extends UIComponent{
 	public void draw(Graphics2D g2) {
 		g2.drawImage(image, x, y, width, height, null);
 	}
-
 }
