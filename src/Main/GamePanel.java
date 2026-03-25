@@ -41,7 +41,7 @@ public class GamePanel extends JPanel implements Runnable {
 
 	TileManager tileM = new TileManager(this);
 	public KeyHandler keyH = new KeyHandler(this);
-	public MouseListener mouseL = new MouseListener();
+	public MouseListener mouseL = new MouseListener(this);
 	Sound music = new Sound();
 	Sound soundEffect = new Sound();
 	
@@ -107,6 +107,9 @@ public class GamePanel extends JPanel implements Runnable {
 	}
 
 	public void update() {
+		// MOUSE UPDATE	
+		mouseL.update();
+		
 		//TITLE STATE
 		if (gameState == titleState) {
 			ui.update();
@@ -158,6 +161,7 @@ public class GamePanel extends JPanel implements Runnable {
 		entityList.clear();
 		
 		ui.draw(g2);
+		mouseL.draw(g2);
 		
 		g2.dispose();
 	}
