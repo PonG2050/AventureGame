@@ -25,7 +25,8 @@ public class Player extends Entity {
 	public final int screenY;
 	public int keyCount = 0;
 	final int playerScale = 2;
-
+	int slowDown;
+	int coolDown;
 	public Player(GamePanel gp, KeyHandler keyH, MouseListener mouseL) {
 
 		super(gp);
@@ -58,9 +59,11 @@ public class Player extends Entity {
 		worldX = gp.maxWorldCol / 2 * gp.tileSize;
 		worldY = gp.maxWorldCol / 2 * gp.tileSize;
 		speed = 5;
+		slowDown = 2;
+		coolDown = 0;
 		direction = "idle";
 	}
-
+	// GET IMAGE METHODS
 	public void getPlayerImage() {
 		try {
 			sheet = ImageIO.read(getClass().getResourceAsStream("/player/Player_sheet.png"));
@@ -82,7 +85,7 @@ public class Player extends Entity {
 	    }
 	    return subImage;
 	}
-	public void getPlayerIdle() {
+	public void getPlayerIdleImage() {
 		switch (direction) {
 		case "up":image = getPlayerSubImage(7, 5);break;
 		case "down":image = getPlayerSubImage(0, 5);break;
@@ -91,7 +94,7 @@ public class Player extends Entity {
 		case "idle":image = getPlayerSubImage(0, 5);break;
 		}
 	}
-	public void getPlayerMovement() {
+	public void getPlayerMovementImage() {
 		switch (direction) {
 		case "up":image = getPlayerSubImage(6, 5);break;
 		case "down":image = getPlayerSubImage(1, 5);break;
@@ -99,7 +102,7 @@ public class Player extends Entity {
 		case "left":image = getPlayerSubImage(5, 5);break;
 		}
 	}
-	public void getPlayerAction() {
+	public void getPlayerActionImage() {
 		if (mouseL.leftClick == true) {
 			switch (direction) {
 			case "up":image = getPlayerSubImage(11, 3);break;
@@ -109,16 +112,23 @@ public class Player extends Entity {
 			}
 		}
 	}
+	// UPDATE METHOD
 	public void update() {
+		
+		// PLAYER MOVEMENT SETTINGs
 		isMoving = false;
-	    
 	    double currentSpeed = speed;
-
+        if (mouseL.leftClick == true) {
+        	currentSpeed = speed - slowDown;
+        }
 	    boolean isMovingX = keyH.Left || keyH.Right;
 	    boolean isMovingY = keyH.Up || keyH.Down;
 
 	    if (isMovingX && isMovingY) {
-	        currentSpeed = speed / Math.sqrt(2); 
+	        currentSpeed = speed / Math.sqrt(2);
+	        if (mouseL.leftClick == true) {
+	        	currentSpeed = (speed - slowDown)/ Math.sqrt(2);
+	        }
 	    }
 
 	    if (keyH.Up == true || keyH.Down == true) {
@@ -155,15 +165,19 @@ public class Player extends Entity {
 	        isMoving = true;
 	    }
 		
+	    // GET PLAYER IMAGE
 		spriteCounter++;
 		if (spriteCounter > 4) {
 			spriteCounter = 0;
 			if (mouseL.leftClick == true) {
-				getPlayerAction();
+				if (coolDown > 6) {
+					getPlayerActionImage();
+					coolDown = 0;
+				} else coolDown++;
 			} else if (isMoving){
-				getPlayerMovement();
+				getPlayerMovementImage();
 			} else if (isMoving == false) {
-				getPlayerIdle();
+				getPlayerIdleImage();
 			}
 		}
 		
