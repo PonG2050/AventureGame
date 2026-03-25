@@ -26,7 +26,6 @@ public class Player extends Entity {
 	public int keyCount = 0;
 	final int playerScale = 2;
 	int slowDown;
-	int coolDown;
 	public Player(GamePanel gp, KeyHandler keyH, MouseListener mouseL) {
 
 		super(gp);
@@ -60,7 +59,6 @@ public class Player extends Entity {
 		worldY = gp.maxWorldCol / 2 * gp.tileSize;
 		speed = 5;
 		slowDown = 2;
-		coolDown = 0;
 		direction = "idle";
 	}
 	// GET IMAGE METHODS
@@ -130,7 +128,7 @@ public class Player extends Entity {
 	        	currentSpeed = (speed - slowDown)/ Math.sqrt(2);
 	        }
 	    }
-
+	    
 	    if (keyH.Up == true || keyH.Down == true) {
 	        if (keyH.Up == true) direction = "up";
 	        if (keyH.Down == true) direction = "down";
@@ -147,7 +145,7 @@ public class Player extends Entity {
 	        }
 	        isMoving = true;
 	    }
-   
+	    
 	    if (keyH.Left == true || keyH.Right == true) {
 	        if (keyH.Left == true) direction = "left";
 	        if (keyH.Right == true) direction = "right";
@@ -170,10 +168,7 @@ public class Player extends Entity {
 		if (spriteCounter > 4) {
 			spriteCounter = 0;
 			if (mouseL.leftClick == true) {
-				if (coolDown > 6) {
-					getPlayerActionImage();
-					coolDown = 0;
-				} else coolDown++;
+				getPlayerActionImage();
 			} else if (isMoving){
 				getPlayerMovementImage();
 			} else if (isMoving == false) {
