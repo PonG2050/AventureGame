@@ -5,7 +5,7 @@ import java.awt.event.KeyListener;
 
 public class KeyHandler implements KeyListener {
 	GamePanel gp;
-	public boolean Up, Down, Left, Right, Hit,  HitBox = false;
+	public boolean Up, Down, Left, Right, Hit,  HitBox = false, E;
 	public KeyHandler(GamePanel gp) {
 		this.gp = gp;
 	}
@@ -32,13 +32,13 @@ public class KeyHandler implements KeyListener {
 		if (code == KeyEvent.VK_D) {
 			Right = true;
 		}
-		if (code == KeyEvent.VK_F3) {
-			HitBox = (HitBox == false) ? true : false;
-		}
+		// HITBOX KEY
+		if (code == KeyEvent.VK_F3) HitBox = !HitBox;
 		if (code == KeyEvent.VK_ESCAPE) {
 			gp.gameState = (gp.gameState == gp.playState) ? gp.pauseState : gp.playState;
 		}
-
+		// INVENTORT KEY
+		if (code == KeyEvent.VK_E) E = !E;
 
 	}
 	@Override

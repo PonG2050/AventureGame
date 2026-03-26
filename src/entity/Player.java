@@ -119,8 +119,8 @@ public class Player extends Entity {
         if (mouseL.leftClick == true) {
         	currentSpeed = speed - slowDown;
         }
-	    boolean isMovingX = keyH.Left || keyH.Right;
-	    boolean isMovingY = keyH.Up || keyH.Down;
+	    boolean isMovingX = (keyH.Left || keyH.Right);
+	    boolean isMovingY = (keyH.Up || keyH.Down);
 
 	    if (isMovingX && isMovingY) {
 	        currentSpeed = speed / Math.sqrt(2);
