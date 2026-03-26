@@ -35,6 +35,7 @@ public class Player extends Entity {
 		
 		height = 32;
 		width = 32;
+		name = "player";
 		
 		screenX = gp.screenWidth / 2 - (gp.tileSize / 2);
 		screenY = gp.screenHeight / 2 - (gp.tileSize / 2);
@@ -58,6 +59,8 @@ public class Player extends Entity {
 		worldX = gp.maxWorldCol / 2 * gp.tileSize;
 		worldY = gp.maxWorldCol / 2 * gp.tileSize;
 		speed = 5;
+		maxLife = 20;
+		life = 18;
 		slowDown = 2;
 		direction = "idle";
 	}

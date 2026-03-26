@@ -14,7 +14,10 @@ public class Entity {
 	
 	public int worldX, worldY;
 	public int speed, scale;
+	public String name;
 	public boolean isMoving = false;
+	public int maxLife;
+	public int life;
 	public int recovery = 60;
 	
 	public Rectangle solidArea;
