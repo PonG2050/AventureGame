@@ -45,6 +45,7 @@ public class GamePanel extends JPanel implements Runnable {
 	Sound music = new Sound();
 	Sound soundEffect = new Sound();
 	
+	public LoadAsset lAsset = new LoadAsset();
 	public Player player = new Player(this, keyH, mouseL);
 	public CollisionCheck cChecker = new CollisionCheck(this);
 	public SuperObject obj[] = new SuperObject[10];
@@ -166,18 +167,19 @@ public class GamePanel extends JPanel implements Runnable {
 		g2.dispose();
 	}
 	public void playMusic(int i) {
-		
-		music.setFile(i);
-		music.play();
-		music.loop();
+		music.play(i);
+		music.loop(i);
 	}
-	public void stopMusic() {
-		
-		music.stop();
+	public void stopMusic(int i) {
+		music.stop(i);
 	}
 	public void playSE(int i) {
-		
-		soundEffect.setFile(i);
-		soundEffect.play();
+		// ADD NEW THREAD TO FIX THE LAG WHEN PLAY SOUND EFFECTS
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				soundEffect.play(i);
+			}
+		}).start();
 	}
 }

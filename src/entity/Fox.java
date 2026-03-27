@@ -33,14 +33,8 @@ public class Fox extends Entity{
 		getFoxImage();
 	}
 	public void getFoxImage() {
-		try {
-			 
-		sheet = ImageIO.read(getClass().getResourceAsStream("/animals/Fox.png"));
+		sheet = gp.lAsset.FoxImage;
 		image = sheet.getSubimage(0, 0, width, height);
-		
-		} catch(IOException e) {
-			e.printStackTrace();
-		}
 	}
 	public BufferedImage getFoxSubImage(int row, int maxCol) {
 	    if (col > maxCol) {
