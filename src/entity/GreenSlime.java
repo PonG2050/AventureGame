@@ -36,8 +36,12 @@ public class GreenSlime extends Entity{
 		getGreenSlimeImage();
 	}
 	public void getGreenSlimeImage() {
-		sheet = gp.lAsset.SlimeImage;
-		image = sheet.getSubimage(0, 0, width, height);
+		try {
+			sheet = ImageIO.read(getClass().getResourceAsStream("/monsters/Slime_Green.png"));
+			image = sheet.getSubimage(0, 0, width, height);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	public void update() {
         super.update();

@@ -1,6 +1,7 @@
 package entity;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.geom.AffineTransform;
@@ -41,6 +42,7 @@ public class Player extends Entity {
 		screenY = gp.screenHeight / 2 - (gp.tileSize / 2);
 		
 		int totalScale = gp.scale * playerScale;
+		Font Arial40 = new Font("Arial", Font.BOLD, 40);;
 
 		solidArea = new Rectangle();
 		solidArea.x = 6 * totalScale;
@@ -213,9 +215,13 @@ public class Player extends Entity {
 	public void draw(Graphics2D g2) {
 		
 		g2.drawImage(image, screenX, screenY, gp.tileSize * playerScale, gp.tileSize * playerScale, null);
+		
 		if (keyH.HitBox == true) {
-			g2.setColor(Color.red);
+			g2.setColor(Color.white);
+			// DRAW HITBOX
 			g2.drawRect(screenX + solidArea.x, screenY + solidArea.y, solidArea.width, solidArea.height);
+			// DRAW THE PLAYER'S POSITION
+			g2.drawString("Position: " + worldX/gp.tileSize + ", " + worldY/gp.tileSize, gp.tileSize, gp.tileSize * 3);
 		}
 	}
 

@@ -45,11 +45,10 @@ public class GamePanel extends JPanel implements Runnable {
 	Sound music = new Sound();
 	Sound soundEffect = new Sound();
 	
-	public LoadAsset lAsset = new LoadAsset();
 	public Player player = new Player(this, keyH, mouseL);
 	public CollisionCheck cChecker = new CollisionCheck(this);
-	public SuperObject obj[] = new SuperObject[10];
-	public Entity monster[] = new Entity[10];
+	public SuperObject obj[] = new SuperObject[100];
+	public Entity mob[] = new Entity[100];
 	public UIManager ui = new UIManager(this);
 	
 	ArrayList<Entity> entityList = new ArrayList<>();
@@ -73,7 +72,7 @@ public class GamePanel extends JPanel implements Runnable {
 		gameState = titleState;
 		
 		aSetter.setObject();
-		aSetter.setMonster();
+		aSetter.setMobs();
 	}
 	public void startGameThread() {
 
@@ -123,9 +122,9 @@ public class GamePanel extends JPanel implements Runnable {
 					(obj[i]).update();
 				}
 			}
-			for (int i = 0; i < monster.length; i++) {
-				if (monster[i] != null) {
-					monster[i].update();
+			for (int i = 0; i < mob.length; i++) {
+				if (mob[i] != null) {
+					mob[i].update();
 				}
 			}
 		}
@@ -141,9 +140,9 @@ public class GamePanel extends JPanel implements Runnable {
 
 		//ENTITY AND OBJECT PAINT SETTING
 		entityList.add(player);
-		for (int i = 0; i < monster.length; i++) {
-			if (monster[i] != null) {
-				entityList.add(monster[i]);
+		for (int i = 0; i < mob.length; i++) {
+			if (mob[i] != null) {
+				entityList.add(mob[i]);
 			}
 		}
 		for( int i = 0; i < obj.length; i++) {
