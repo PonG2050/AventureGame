@@ -16,7 +16,7 @@ public class OBJ_Oak_tree extends SuperObject{
 		objectHeightSize = 47;
 		name = "Oak_tree";
 		width = gp.tileSize * 4;
-		height = gp.tileSize * 6;
+		height = gp.tileSize * 5;
 		collision = true;
 		solidArea.height = gp.tileSize - 10;
 		solidArea.width = gp.tileSize / 2;

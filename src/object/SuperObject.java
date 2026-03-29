@@ -3,19 +3,28 @@ package object;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
 
 import Main.GamePanel;
 import entity.Entity;
 
 public class SuperObject extends Entity{
-	public SuperObject(GamePanel gp) {
-		super(gp);
-	}
+
 	public String name;
 	public boolean interacting = false;
 	int objectWidthSize;
 	int objectHeightSize;
-	
+	BufferedImage Outdoor_decor_sheet;
+	public SuperObject(GamePanel gp) {
+		super(gp);
+		try {
+			Outdoor_decor_sheet = ImageIO.read(getClass().getResourceAsStream("/objects/Outdoor_Decor.png"));
+		} catch(IOException e) {
+			e.printStackTrace();
+		}
+	}	
 	public void update() {
 		
 	}

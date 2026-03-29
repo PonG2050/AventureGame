@@ -63,7 +63,7 @@ public class Player extends Entity {
 		speed = 5;
 		maxLife = 20;
 		life = 18;
-		slowDown = 2;
+		slowDown = 4;
 		direction = "idle";
 	}
 	// GET IMAGE METHODS
@@ -187,7 +187,7 @@ public class Player extends Entity {
 			if (gp.obj[i] != null) {
 				String objectName = gp.obj[i].name;
 				switch (objectName) {
-				case "key":
+				case "Key":
 					gp.playSE(1);
 					keyCount++;
 					gp.obj[i] = null;
@@ -202,7 +202,7 @@ public class Player extends Entity {
 			if (gp.obj[i] != null) {
 			String objectName = gp.obj[i].name;
 			switch (objectName) {
-			case "chest":
+			case "Chest":
 				if (keyCount > 0) {
 					gp.obj[i].interacting = true;
 					System.out.println("open chest");

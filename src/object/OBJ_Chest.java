@@ -1,14 +1,9 @@
 package object;
-
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
 import Main.GamePanel;
-import tile.Tile;
 
 public class OBJ_Chest extends SuperObject {
 	
@@ -16,7 +11,7 @@ public class OBJ_Chest extends SuperObject {
 
 	public OBJ_Chest(GamePanel gp) {
 		super(gp);
-		name = "chest";
+		name = "Chest";
 		width = gp.tileSize;
 		height = gp.tileSize * 16 / 9;
 		collision = true;

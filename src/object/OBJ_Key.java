@@ -12,7 +12,7 @@ public class OBJ_Key extends SuperObject{
 	public OBJ_Key(GamePanel gp) {
 
 		super(gp);
-		name = "key";
+		name = "Key";
 		width = gp.tileSize * 2 / 3;
 		height = gp.tileSize * 4 / 3;
 		collision = false;

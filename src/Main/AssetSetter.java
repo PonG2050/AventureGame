@@ -4,9 +4,12 @@ import entity.Entity;
 import entity.Fox;
 import entity.GreenSlime;
 import entity.Skeleton;
+import object.BigRock;
+import object.NormalRock;
 import object.OBJ_Chest;
 import object.OBJ_Key;
 import object.OBJ_Oak_tree;
+import object.SmallRock;
 import object.SuperObject;
 
 public class AssetSetter {
@@ -44,6 +47,22 @@ public class AssetSetter {
 		spawnObject(new OBJ_Oak_tree(gp), 178, 120); 
 		spawnObject(new OBJ_Oak_tree(gp), 183, 123); 
 		spawnObject(new OBJ_Oak_tree(gp), 190, 114); 
+		spawnObject(new SmallRock(gp), 125, 125); 
+		spawnObject(new NormalRock(gp), 137, 129); 
+		spawnObject(new NormalRock(gp), 128, 129); 
+		spawnObject(new NormalRock(gp), 142, 133); 
+		spawnObject(new NormalRock(gp), 134, 137); 
+		spawnObject(new NormalRock(gp), 124, 133); 
+		spawnObject(new NormalRock(gp), 134, 125); 
+		spawnObject(new NormalRock(gp), 140, 138); 
+		spawnObject(new NormalRock(gp), 112, 130); 
+		spawnObject(new NormalRock(gp), 147, 118); 
+		spawnObject(new NormalRock(gp), 156, 122); 
+		spawnObject(new NormalRock(gp), 161, 115); 
+		spawnObject(new BigRock(gp), 128, 126); 
+		spawnObject(new BigRock(gp), 144, 139); 
+		spawnObject(new BigRock(gp), 143, 134); 
+		spawnObject(new BigRock(gp), 132, 129); 
 
 	}
 	

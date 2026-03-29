@@ -4,16 +4,11 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.io.IOException;
-import java.net.URL;
 import java.util.Random;
 
 import javax.imageio.ImageIO;
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
 
 import Main.GamePanel;
-import Main.KeyHandler;
 
 public class GreenSlime extends Entity{
 	
