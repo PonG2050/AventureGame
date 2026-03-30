@@ -21,6 +21,8 @@ public class Skeleton extends Entity{
 		direction = "idle";
 		speed = 2;
 		scale = 2;
+		maxLife = 15;
+		life = 15;
 		
 		int totalScale = gp.scale * scale;
 
@@ -88,13 +90,6 @@ public class Skeleton extends Entity{
 	    }
 	}
 
-    public boolean isOnScreen() {
-        return worldX + gp.tileSize * scale > gp.player.worldX - gp.player.screenX &&
-               worldX - gp.tileSize * scale < gp.player.worldX + gp.player.screenX &&
-               worldY + gp.tileSize * scale > gp.player.worldY - gp.player.screenY &&
-               worldY - gp.tileSize * scale < gp.player.worldY + gp.player.screenY;
-    }
-
 	public void action() {
 	    actionLockCounter++;
 	    int randomInterval = 24 + new Random().nextInt(64);
@@ -118,16 +113,26 @@ public class Skeleton extends Entity{
 	    int screenX = worldX - gp.player.worldX + gp.player.screenX;
 	    int screenY = worldY - gp.player.worldY + gp.player.screenY;
 
-	    if (worldX + gp.tileSize > gp.player.worldX - gp.player.screenX &&
-	        worldX - gp.tileSize < gp.player.worldX + gp.player.screenX &&
-	        worldY + gp.tileSize > gp.player.worldY - gp.player.screenY &&
-	        worldY - gp.tileSize < gp.player.worldY + gp.player.screenY) {
+	    if (isOnScreen()) {
 	        
 	        g2.drawImage(image, screenX, screenY, gp.tileSize * scale, gp.tileSize * scale, null);
 			if (gp.keyH.HitBox == true) {
 				g2.setColor(Color.red);
 				g2.drawRect(screenX + solidArea.x, screenY + solidArea.y, solidArea.width, solidArea.height);
 			}
+			
+			//DRAW HEALTH BAR
+			double oneScale = (double) solidArea.width / maxLife;
+			int hpBarValue = (int) (oneScale * life);
+			
+			if(hpBarValue < 0) hpBarValue = 0;
+			int barHeight = gp.tileSize / 12;
+			
+			g2.setColor(new Color(35, 35, 35));
+			g2.fillRect(screenX + solidArea.x, screenY + gp.tileSize/4, solidArea.width + 2, barHeight + 2);
+			
+			g2.setColor(new Color(255, 0, 30));
+			g2.fillRect(screenX + solidArea.x, screenY + gp.tileSize/4, hpBarValue, barHeight);
 	    }
 	}
 }

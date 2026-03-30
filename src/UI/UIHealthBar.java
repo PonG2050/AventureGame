@@ -1,6 +1,8 @@
 package UI;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import Main.GamePanel;
 import entity.Entity;
@@ -18,6 +20,7 @@ public class UIHealthBar extends UIComponent {
 		this.currentEntity = entity;
 		int life = entity.life;
 		int maxLife = entity.maxLife;
+		
 
 		full = life / 2;
 		half = life % 2;
@@ -48,6 +51,5 @@ public class UIHealthBar extends UIComponent {
 				drawX += spacing;
 			}			
 		}
-
 	}
 }

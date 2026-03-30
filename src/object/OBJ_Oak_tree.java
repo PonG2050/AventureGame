@@ -19,9 +19,9 @@ public class OBJ_Oak_tree extends SuperObject{
 		height = gp.tileSize * 5;
 		collision = true;
 		solidArea.height = gp.tileSize - 10;
-		solidArea.width = gp.tileSize / 2;
+		solidArea.width = gp.tileSize / 2 + 2;
 		solidArea.x = width / 2 - solidArea.width / 2;
-		solidArea.y = height / 2 + solidArea.height / 2 + 20;
+		solidArea.y = height / 2 + solidArea.height / 2 + 18;
 		solidAreaDefaultX = solidArea.x;
 		solidAreaDefaultY = solidArea.y;
 		spriteCounter = 0;

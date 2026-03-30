@@ -41,6 +41,12 @@ public class Entity {
 		this.gp = gp;
 		solidArea = new Rectangle(0, 0, 48, 48);
 	}
+    public boolean isOnScreen() {
+        return worldX + gp.tileSize * scale > gp.player.worldX - gp.player.screenX &&
+               worldX - gp.tileSize * scale < gp.player.worldX + gp.player.screenX &&
+               worldY + gp.tileSize * scale > gp.player.worldY - gp.player.screenY &&
+               worldY - gp.tileSize * scale < gp.player.worldY + gp.player.screenY;
+    }
 	public void action() {
 		
 	}

@@ -81,14 +81,6 @@ public class Fox extends Entity{
 	    }
 	}
 
-
-    public boolean isOnScreen() {
-        return worldX + gp.tileSize * scale > gp.player.worldX - gp.player.screenX &&
-               worldX - gp.tileSize * scale < gp.player.worldX + gp.player.screenX &&
-               worldY + gp.tileSize * scale > gp.player.worldY - gp.player.screenY &&
-               worldY - gp.tileSize * scale < gp.player.worldY + gp.player.screenY;
-    }
-
 	public void action() {
 	    actionLockCounter++;
 	    int randomInterval = 80 + new Random().nextInt(60);
@@ -116,10 +108,7 @@ public class Fox extends Entity{
 	    int screenX = worldX - gp.player.worldX + gp.player.screenX;
 	    int screenY = worldY - gp.player.worldY + gp.player.screenY;
 
-	    if (worldX + gp.tileSize > gp.player.worldX - gp.player.screenX &&
-	        worldX - gp.tileSize < gp.player.worldX + gp.player.screenX &&
-	        worldY + gp.tileSize > gp.player.worldY - gp.player.screenY &&
-	        worldY - gp.tileSize < gp.player.worldY + gp.player.screenY) {
+	    if (isOnScreen()) {
 	        
 	        g2.drawImage(image, screenX, screenY, gp.tileSize * scale, gp.tileSize * scale, null);
 			if (gp.keyH.HitBox == true) {

@@ -5,6 +5,8 @@ import entity.Fox;
 import entity.GreenSlime;
 import entity.Skeleton;
 import object.BigRock;
+import object.Islet;
+import object.Lotus_leaf;
 import object.NormalRock;
 import object.OBJ_Chest;
 import object.OBJ_Key;
@@ -47,22 +49,55 @@ public class AssetSetter {
 		spawnObject(new OBJ_Oak_tree(gp), 178, 120); 
 		spawnObject(new OBJ_Oak_tree(gp), 183, 123); 
 		spawnObject(new OBJ_Oak_tree(gp), 190, 114); 
+		spawnObject(new OBJ_Oak_tree(gp), 131, 140); 
+		spawnObject(new OBJ_Oak_tree(gp), 123, 145); 
+		spawnObject(new OBJ_Oak_tree(gp), 115, 143); 
+		spawnObject(new OBJ_Oak_tree(gp), 122, 136); 
+	
 		spawnObject(new SmallRock(gp), 125, 125); 
-		spawnObject(new NormalRock(gp), 137, 129); 
+		spawnObject(new SmallRock(gp), 137, 129); 
+		spawnObject(new SmallRock(gp), 112, 130); 
+		spawnObject(new SmallRock(gp), 134, 125); 
+		spawnObject(new SmallRock(gp), 156, 122); 
+		
 		spawnObject(new NormalRock(gp), 128, 129); 
 		spawnObject(new NormalRock(gp), 142, 133); 
 		spawnObject(new NormalRock(gp), 134, 137); 
 		spawnObject(new NormalRock(gp), 124, 133); 
-		spawnObject(new NormalRock(gp), 134, 125); 
 		spawnObject(new NormalRock(gp), 140, 138); 
-		spawnObject(new NormalRock(gp), 112, 130); 
 		spawnObject(new NormalRock(gp), 147, 118); 
-		spawnObject(new NormalRock(gp), 156, 122); 
 		spawnObject(new NormalRock(gp), 161, 115); 
+		spawnObject(new NormalRock(gp), 119, 138); 
+		spawnObject(new NormalRock(gp), 127, 145); 
+		spawnObject(new NormalRock(gp), 117, 148); 
+		
 		spawnObject(new BigRock(gp), 128, 126); 
 		spawnObject(new BigRock(gp), 144, 139); 
 		spawnObject(new BigRock(gp), 143, 134); 
 		spawnObject(new BigRock(gp), 132, 129); 
+		
+		spawnObject(new Islet(gp), 139, 152); 
+		spawnObject(new Islet(gp), 138, 152); 
+		spawnObject(new Islet(gp), 142, 154); 
+		spawnObject(new Islet(gp), 135, 120); 
+		spawnObject(new Islet(gp), 139, 155); 
+		spawnObject(new Islet(gp), 126, 122);
+		
+		spawnObject(new Lotus_leaf(gp), 127, 122); 
+		spawnObject(new Lotus_leaf(gp), 128, 122); 
+		spawnObject(new Lotus_leaf(gp), 128, 121); 
+		spawnObject(new Lotus_leaf(gp), 129, 122); 
+		spawnObject(new Lotus_leaf(gp), 140, 152); 
+		spawnObject(new Lotus_leaf(gp), 135, 155); 
+		spawnObject(new Lotus_leaf(gp), 142, 155); 
+		spawnObject(new Lotus_leaf(gp), 137, 154); 
+		spawnObject(new Lotus_leaf(gp), 142, 155); 
+		spawnObject(new Lotus_leaf(gp), 110, 128); 
+		spawnObject(new Lotus_leaf(gp), 111, 120); 
+		spawnObject(new Lotus_leaf(gp), 121, 117); 
+		spawnObject(new Lotus_leaf(gp), 140, 120); 
+		spawnObject(new Lotus_leaf(gp), 141, 120); 
+		spawnObject(new Lotus_leaf(gp), 136, 116); 
 
 	}
 	

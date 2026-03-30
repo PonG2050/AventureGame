@@ -38,7 +38,9 @@ public class MouseListener extends MouseAdapter{
 			isClicking = true;
 			mouseX = e.getX();
 			mouseY = e.getY();
-			System.out.println(mouseX + " " + mouseY);
+			
+			System.out.println((gp.player.worldX - gp.player.screenX + mouseX)/gp.tileSize + " " + (gp.player.worldY - gp.player.screenY + mouseY)/gp.tileSize);
+//			System.out.println(mouseX + " " + mouseY);
 		}
 	}
 	@Override
