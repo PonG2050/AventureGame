@@ -1,4 +1,4 @@
-package entity;
+package entity.animal;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -11,6 +11,7 @@ import javax.imageio.ImageIO;
 
 import Main.GamePanel;
 import Main.KeyHandler;
+import entity.Entity;
 
 public class Fox extends Entity{
 	int currentIdleRow = 1;

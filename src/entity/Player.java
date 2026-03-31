@@ -153,7 +153,14 @@ public class Player extends Entity {
 
 	        collisionOn = false;
 	        gp.cChecker.checkTile(this);
+	        // OBJECT COLLISION CHECK
 	        int objectIndex = gp.cChecker.checkObject(this,  true);
+	        // ENTITY COLLISION CHECK
+	        int entityIndex = gp.cChecker.checkEntity(this, gp.monster);
+	        if (entityIndex != 999) {
+	        	life--;
+	        }
+	        // ACTION CHECK
 	        pickupObject(objectIndex);
 	        interactObject(objectIndex);
 	        
@@ -170,7 +177,14 @@ public class Player extends Entity {
 
 	        collisionOn = false;
 	        gp.cChecker.checkTile(this);
+	        // OBJECT COLLISION CHECK
 	        int objectIndex = gp.cChecker.checkObject(this,  true);
+	        // ENTITY COLLISION CHECK
+	        int entityIndex = gp.cChecker.checkEntity(this, gp.monster);
+	        if (entityIndex != 999) {
+	        	life--;
+	        }
+	        // ACTION CHECK
 	        pickupObject(objectIndex);
 	        interactObject(objectIndex);
 
@@ -203,6 +217,10 @@ public class Player extends Entity {
 				}
 			}
 			recoveryCounter = 0;
+		}
+		// HEALTH UPDATE
+		if (life <= 0) {
+			System.exit(0);
 		}
 	}
 	public void pickupObject(int i) {

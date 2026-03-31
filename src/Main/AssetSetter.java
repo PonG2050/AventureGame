@@ -1,9 +1,9 @@
 package Main;
 
 import entity.Entity;
-import entity.Fox;
-import entity.GreenSlime;
-import entity.Skeleton;
+import entity.animal.Fox;
+import entity.monster.GreenSlime;
+import entity.monster.Skeleton;
 import object.BigRock;
 import object.BlueWildflower;
 import object.Islet;
@@ -124,13 +124,15 @@ public class AssetSetter {
 
 	}
 	
-	public void setMobs() {
-		spawnMobs(new GreenSlime(gp), 131, 126);
-		spawnMobs(new GreenSlime(gp), 133, 128);
-		spawnMobs(new Fox(gp), 125, 132);
-		spawnMobs(new Skeleton(gp), 135, 129);
-		spawnMobs(new Skeleton(gp), 132, 132);
-		spawnMobs(new Skeleton(gp), 127, 131); 
+	public void setMonster() {
+		spawnMonster(new GreenSlime(gp), 131, 126);
+		spawnMonster(new GreenSlime(gp), 133, 128);
+		spawnMonster(new Skeleton(gp), 135, 129);
+		spawnMonster(new Skeleton(gp), 132, 132);
+		spawnMonster(new Skeleton(gp), 127, 131); 
+	}
+	public void setAnimal() {
+		spawnAnimal(new Fox(gp), 125, 132);
 	}
 	public void spawnObject(SuperObject new_obj, int col, int row) {
 		for (int i = 0; i < gp.obj.length; i++) {
@@ -142,12 +144,22 @@ public class AssetSetter {
 			}
 		}
 	}
-	public void spawnMobs(Entity new_entity, int col, int row) {
-		for (int i = 0; i < gp.mob.length; i++) {
-			if (gp.mob[i] == null) {
-				gp.mob[i] = new_entity;
-				gp.mob[i].worldX = gp.tileSize * col;
-				gp.mob[i].worldY = gp.tileSize * row;
+	public void spawnMonster(Entity new_entity, int col, int row) {
+		for (int i = 0; i < gp.monster.length; i++) {
+			if (gp.monster[i] == null) {
+				gp.monster[i] = new_entity;
+				gp.monster[i].worldX = gp.tileSize * col;
+				gp.monster[i].worldY = gp.tileSize * row;
+				break;
+			}
+		}
+	}
+	public void spawnAnimal(Entity new_entity, int col, int row) {
+		for (int i = 0; i < gp.animal.length; i++) {
+			if (gp.animal[i] == null) {
+				gp.animal[i] = new_entity;
+				gp.animal[i].worldX = gp.tileSize * col;
+				gp.animal[i].worldY = gp.tileSize * row;
 				break;
 			}
 		}
