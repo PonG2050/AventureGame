@@ -112,7 +112,7 @@ public class GamePanel extends JPanel implements Runnable {
 		
 		//TITLE STATE
 		if (gameState == titleState) {
-			ui.update();
+			ui.titleStateUpdate();
 		}
 		//PLAY STATE 
 		if (gameState == playState) {
@@ -127,8 +127,11 @@ public class GamePanel extends JPanel implements Runnable {
 					mob[i].update();
 				}
 			}
+			ui.playStateUpdate();
 		}
-		if (gameState == pauseState) {}
+		if (gameState == pauseState) {
+			ui.pauseStateUpdate();
+		}
 	}
 
 	public void paintComponent(Graphics g) {

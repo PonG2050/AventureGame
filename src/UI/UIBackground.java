@@ -13,7 +13,7 @@ public class UIBackground extends UIComponent {
 	int currentFrames = 0;
 
 	public UIBackground(GamePanel gp) {
-		super(gp, 0, 0, 630 + (14 * gp.tileSize), 500 + (14 * gp.tileSize));
+		super(gp, 0, 0, 630, 500);
 		frames = new BufferedImage[120];
 		loadFrames();
 	}
@@ -42,6 +42,6 @@ public class UIBackground extends UIComponent {
 
 	@Override
 	public void draw(Graphics2D g2) {
-		g2.drawImage(image, x, y, width, height, null);
+		g2.drawImage(image, x, y, width * gp.scale, height * gp.scale, null);
 	}
 }

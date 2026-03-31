@@ -3,33 +3,33 @@ import java.util.Random;
 
 import Main.GamePanel;
 
-public class Islet extends SuperObject {
+public class RedWildflower extends SuperObject {
 	
 	public boolean isOpen = false;
 
-	public Islet(GamePanel gp) {
+	public RedWildflower(GamePanel gp) {
 		super(gp);
-		name = "Islet";
-		int[][] IsletList = {{4, 5, 6, 7, 8, 3, 6, 7, 8, 6},
-						    {4, 4, 4, 4, 4, 5 ,5, 5, 5, 5}};
+		name = "RedWildflower";
+		int[][] RedWildflowerList = {{3, 4, 5},
+						    		 {1, 1, 1}};
 		Random random = new Random();
 		width = gp.tileSize;
 		height = gp.tileSize;
-		collision = true;
+		collision = false;
 		
-		solidArea.height = gp.tileSize/2;
-		solidArea.width = gp.tileSize/2;
-		solidArea.x = gp.tileSize/2 - solidArea.width/2;
-		solidArea.y = gp.tileSize/2 - solidArea.height/2;
+		solidArea.height = 0;
+		solidArea.width = 0;
+		solidArea.x = 0;
+		solidArea.y = 0;
 		solidAreaDefaultX = solidArea.x;
 		solidAreaDefaultY = solidArea.y;
 		
 		objectWidthSize = 16*gp.tileSize;
 		objectHeightSize = 16*gp.tileSize;
 		spriteCounter = 0;
-		int i = random.nextInt(10);
-		col = IsletList[0][i];
-		row = IsletList[1][i];
+		int i = random.nextInt(3);
+		col = RedWildflowerList[0][i];
+		row = RedWildflowerList[1][i];
 		
 		image = Outdoor_decor_sheet.getSubimage(col * 16, row * 16, 16, 16); 
 

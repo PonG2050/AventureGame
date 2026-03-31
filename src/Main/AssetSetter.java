@@ -5,6 +5,7 @@ import entity.Fox;
 import entity.GreenSlime;
 import entity.Skeleton;
 import object.BigRock;
+import object.BlueWildflower;
 import object.Islet;
 import object.Lotus_leaf;
 import object.NormalRock;
@@ -13,6 +14,8 @@ import object.OBJ_Key;
 import object.OBJ_Oak_tree;
 import object.SmallRock;
 import object.SuperObject;
+import object.Weed;
+import object.WhiteWildflower;
 
 public class AssetSetter {
 	
@@ -98,6 +101,26 @@ public class AssetSetter {
 		spawnObject(new Lotus_leaf(gp), 140, 120); 
 		spawnObject(new Lotus_leaf(gp), 141, 120); 
 		spawnObject(new Lotus_leaf(gp), 136, 116); 
+
+		spawnObject(new BlueWildflower(gp), 122, 129); 
+		spawnObject(new BlueWildflower(gp), 121, 129); 
+		spawnObject(new BlueWildflower(gp), 122, 128); 
+		spawnObject(new BlueWildflower(gp), 122, 130); 
+		spawnObject(new BlueWildflower(gp), 123, 129); 
+		spawnObject(new BlueWildflower(gp), 123, 130); 
+
+		spawnObject(new WhiteWildflower(gp), 142, 129); 
+		spawnObject(new WhiteWildflower(gp), 141, 130); 
+		spawnObject(new WhiteWildflower(gp), 141, 129); 
+		spawnObject(new WhiteWildflower(gp), 142, 129); 
+		spawnObject(new WhiteWildflower(gp), 141, 129); 
+		spawnObject(new WhiteWildflower(gp), 140, 129); 
+		spawnObject(new WhiteWildflower(gp), 142, 128); 
+
+		spawnObject(new Weed(gp), 135, 125); 
+		spawnObject(new Weed(gp), 130, 125); 
+		spawnObject(new Weed(gp), 130, 131); 
+		spawnObject(new Weed(gp), 138, 131); 
 
 	}
 	

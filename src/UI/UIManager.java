@@ -13,21 +13,17 @@ public class UIManager {
 	UIComponent UIComponent;
 	UIBackground Background;
 	UIInventory Inventory;
-	// PLAYER HEALTH
+	// PLAYER'S HEALTH
 	UIHealthBar playerHealthBar;
     BufferedImage heartFull, heartHalf, heartBlank;
+    // PLAYER'S ENERGY 
+	UIEnergyBar playerEnergyBar;
+    BufferedImage energyFull, energyHalf, energyBlank;
     // TITLE BUTTONS
 	UIButton playButton, quitButton, optionButton;
-	UIButton[] hotbarButton;
 	BufferedImage sheet, playImg, quitImg, optionImg, hotbarImg;
 	public UIManager(GamePanel gp) {
 		this.gp = gp;
-		hotbarButton = new UIButton[5];
-		try {
-			BufferedImage playImage = ImageIO.read(getClass().getResourceAsStream("/UI/UI_Buttons.png"));
-		}catch (IOException e) {
-			e.printStackTrace();
-		}
 		setDefaultValue();
 	}
 
@@ -60,20 +56,10 @@ public class UIManager {
 			int optionButtonX = gp.screenWidth/2 - optionButtonWidth/2;
 			int optionButtonY = gp.screenHeight/2;
 			optionButton = new UIButton(gp, "OPTION", optionImg, optionButtonX, optionButtonY, optionButtonWidth, optionButtonHeight);
-			// HOTBAR BUTTON SETTING
-			hotbarImg = sheet.getSubimage(36 * 16, 0 * 16, 16 * 3, 16 * 3);
-			int hotbarButtonHeight = gp.tileSize * 2;
-			int hotbarButtonWidth = gp.tileSize * 2;
-			int hotbarButtonX = gp.screenWidth/2 - (hotbarButtonWidth * hotbarButton.length)/2 + gp.tileSize;
-			int hotbarButtonY = gp.screenHeight/2 + 8 * gp.tileSize;
-			for (int i = 0; i < hotbarButton.length; i++) {
-				hotbarButtonX += hotbarButtonWidth - gp.tileSize + 4*gp.scale;
-				hotbarButton[i] = new UIButton(gp, "hotbar", hotbarImg, hotbarButtonX, hotbarButtonY, hotbarButtonWidth, hotbarButtonHeight);
-			}
 			// PLAYER'S HEART IMAGE
 			heartFull = sheet.getSubimage(0 * 16, 62 * 16, 16, 16);
 			heartHalf = sheet.getSubimage(1 * 16, 62 * 16, 16, 16);
-	        heartBlank = sheet.getSubimage(2 * 16, 62 * 16, 16, 16);
+			heartBlank = sheet.getSubimage(2 * 16, 62 * 16, 16, 16);
 	        int hbX = gp.tileSize / 2;
 	        int hbY = gp.tileSize / 2;
 	        int heartSize = gp.tileSize / 2;
@@ -81,33 +67,41 @@ public class UIManager {
 	        playerHealthBar.heartFull = heartFull;
 	        playerHealthBar.heartHalf = heartHalf;
 	        playerHealthBar.heartBlank = heartBlank;
+	        // PLAYER' ENERGY IMAGE
+			energyFull = sheet.getSubimage(9 * 16, 62 * 16, 16, 16);
+			energyHalf = sheet.getSubimage(10 * 16, 62 * 16, 16, 16);
+	        energyBlank = sheet.getSubimage(11 * 16, 62 * 16, 16, 16);
+	        int eX = gp.tileSize / 2;
+	        int eY = gp.tileSize;
+	        int energySize = gp.tileSize / 2;
+	        playerEnergyBar = new UIEnergyBar(gp, eX, eY, energySize, energySize); 
+	        playerEnergyBar.energyFull = energyFull;
+	        playerEnergyBar.energyHalf = energyHalf;
+	        playerEnergyBar.energyBlank = energyBlank;
+	
 			
 		}catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-	public void update() {
-		if (gp.gameState == gp.titleState) {
-			Background.update();
-			playButton.update();
-			quitButton.update();
-			optionButton.update();
-			if (playButton.isClicked()) {
-				gp.gameState = gp.playState;
-			} else if (quitButton.isClicked()) {
-				System.exit(0);
-			}
+	public void titleStateUpdate() {
+		Background.update();
+		playButton.update();
+		quitButton.update();
+		optionButton.update();
+		if (playButton.isClicked()) {
+			gp.gameState = gp.playState;
+		} else if (quitButton.isClicked()) {
+			System.exit(0);
 		}
-		if (gp.gameState == gp.playState) {
-			Inventory.update();
-			for (int i = 0; i < hotbarButton.length; i++) {
-				hotbarButton[i].update();
-			}
-			playerHealthBar.update(gp.player);
-		}
-		if (gp.gameState == gp.pauseState) {
-			
-		}
+	}
+	public void playStateUpdate() {
+		Inventory.update();
+		playerHealthBar.update();
+		playerEnergyBar.update();	
+	}
+	public void pauseStateUpdate() {
+		
 	}
 	public void draw(Graphics2D g2) {
 		if (gp.gameState == gp.titleState) {
@@ -117,13 +111,9 @@ public class UIManager {
 			optionButton.draw(g2);
 		}
 		if (gp.gameState == gp.playState) {
-			if (gp.keyH.E) {
-				Inventory.draw(g2);
-			} 
-			for (int i = 0; i < hotbarButton.length; i++) {
-				hotbarButton[i].draw(g2);
-			}
+			Inventory.draw(g2);
 			playerHealthBar.draw(g2);
+			playerEnergyBar.draw(g2);
 		}
 		if (gp.gameState == gp.pauseState) {
 			

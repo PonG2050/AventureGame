@@ -27,6 +27,9 @@ public class Player extends Entity {
 	public int keyCount = 0;
 	final int playerScale = 2;
 	int slowDown;
+	public int energy;
+	public int maxEnergy;
+	private int recoveryCounter = 0;
 	public Player(GamePanel gp, KeyHandler keyH, MouseListener mouseL) {
 
 		super(gp);
@@ -63,7 +66,9 @@ public class Player extends Entity {
 		speed = 5;
 		maxLife = 20;
 		life = 18;
-		slowDown = 4;
+		maxEnergy = 20;
+		energy = 20;
+		slowDown = 3;
 		direction = "idle";
 	}
 	// GET IMAGE METHODS
@@ -121,15 +126,23 @@ public class Player extends Entity {
 		// PLAYER MOVEMENT SETTINGs
 		isMoving = false;
 	    double currentSpeed = speed;
+	    // SLOWDOWN WHEN PLAYER ATTACKS
         if (mouseL.leftClick == true) {
+        	currentSpeed = speed - slowDown;
+        }
+        // SLOWDOWN WHEN PLAYER HAS LOW ENERGY
+        if (energy < 5) {
         	currentSpeed = speed - slowDown;
         }
 	    boolean isMovingX = (keyH.Left || keyH.Right);
 	    boolean isMovingY = (keyH.Up || keyH.Down);
-
+	    // CHECK DIAGONAL MOVING 
 	    if (isMovingX && isMovingY) {
 	        currentSpeed = speed / Math.sqrt(2);
 	        if (mouseL.leftClick == true) {
+	        	currentSpeed = (speed - slowDown)/ Math.sqrt(2);
+	        }
+	        if (energy < 5) {
 	        	currentSpeed = (speed - slowDown)/ Math.sqrt(2);
 	        }
 	    }
@@ -180,7 +193,17 @@ public class Player extends Entity {
 				getPlayerIdleImage();
 			}
 		}
-		
+		// RECOVERY UPDATE
+		recoveryCounter++;
+		if (recoveryCounter > 120) {
+			if (life < maxLife) {
+				if (energy > 0) {
+					energy--;
+					life++;
+				}
+			}
+			recoveryCounter = 0;
+		}
 	}
 	public void pickupObject(int i) {
 		if (i != 999) {

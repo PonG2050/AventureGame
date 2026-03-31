@@ -10,7 +10,7 @@ public class Lotus_leaf extends SuperObject {
 	public Lotus_leaf(GamePanel gp) {
 		super(gp);
 		name = "Lotus_leaf";
-		int[][] RockList = {{3, 4, 5, 4},
+		int[][] Lotus_leafList = {{3, 4, 5, 4},
 						    {3, 3, 3, 3}};
 		Random random = new Random();
 		width = gp.tileSize;
@@ -28,8 +28,8 @@ public class Lotus_leaf extends SuperObject {
 		objectHeightSize = 16*gp.tileSize;
 		spriteCounter = 0;
 		int i = random.nextInt(4);
-		col = RockList[0][i];
-		row = RockList[1][i];
+		col = Lotus_leafList[0][i];
+		row = Lotus_leafList[1][i];
 		
 		image = Outdoor_decor_sheet.getSubimage(col * 16, row * 16, 16, 16); 
 

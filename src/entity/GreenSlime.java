@@ -25,8 +25,8 @@ public class GreenSlime extends Entity{
 		solidArea = new Rectangle();
 		solidArea.height = gp.tileSize * 2 / 3;
 		solidArea.width = gp.tileSize * 2 / 3;
-		solidArea.x = width/2 - solidArea.width/2;
-		solidArea.y = height/2 - solidArea.height/2;
+		solidArea.x = (width * gp.scale/scale)/2 - solidArea.width/2;
+		solidArea.y = (height * gp.scale/scale)/2 - solidArea.height/2;
 		solidAreaDefaultX = solidArea.x;
 		solidAreaDefaultY = solidArea.y;
 		
