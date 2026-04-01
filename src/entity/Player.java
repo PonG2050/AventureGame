@@ -29,6 +29,8 @@ public class Player extends Entity {
 	int slowDown;
 	public int energy;
 	public int maxEnergy;
+	public boolean invincible = false;
+	private int invincibleCounter = 0;
 	private int recoveryCounter = 0;
 	public Player(GamePanel gp, KeyHandler keyH, MouseListener mouseL) {
 
@@ -120,7 +122,7 @@ public class Player extends Entity {
 			}
 		}
 	}
-	// UPDATE METHOD
+	// UPDATE METHOD - DONT USE SUPER UPDATE
 	public void update() {
 		
 		// PLAYER MOVEMENT SETTINGs
@@ -140,10 +142,10 @@ public class Player extends Entity {
 	    if (isMovingX && isMovingY) {
 	        currentSpeed = speed / Math.sqrt(2);
 	        if (mouseL.leftClick == true) {
-	        	currentSpeed = (speed - slowDown)/ Math.sqrt(2);
+	        	currentSpeed /= Math.sqrt(2);
 	        }
 	        if (energy < 5) {
-	        	currentSpeed = (speed - slowDown)/ Math.sqrt(2);
+	        	currentSpeed /= Math.sqrt(2);
 	        }
 	    }
 	    
@@ -158,7 +160,10 @@ public class Player extends Entity {
 	        // ENTITY COLLISION CHECK
 	        int entityIndex = gp.cChecker.checkEntity(this, gp.monster);
 	        if (entityIndex != 999) {
-	        	life--;
+	        	if (invincible == false) {
+		        	life -= gp.monster[entityIndex].damage;
+	        		invincible = true;
+	        	}
 	        }
 	        // ACTION CHECK
 	        pickupObject(objectIndex);
@@ -182,7 +187,10 @@ public class Player extends Entity {
 	        // ENTITY COLLISION CHECK
 	        int entityIndex = gp.cChecker.checkEntity(this, gp.monster);
 	        if (entityIndex != 999) {
-	        	life--;
+	        	if (invincible == false) {
+		        	life -= gp.monster[entityIndex].damage;
+	        		invincible = true;
+	        	}
 	        }
 	        // ACTION CHECK
 	        pickupObject(objectIndex);
@@ -195,6 +203,29 @@ public class Player extends Entity {
 	        isMoving = true;
 	    }
 		
+		// RECOVERY UPDATE
+		recoveryCounter++;
+		if (recoveryCounter > 300) {
+			if (life < maxLife) {
+				if (energy > 0) {
+					energy--;
+					life++;
+				}
+			}
+			recoveryCounter = 0;
+		}
+		// INVINCIBLE UPDATE
+        if (invincible == true) {
+        	invincibleCounter++;
+        	if (invincibleCounter > 60) {
+        		invincible = false;
+        		invincibleCounter = 0;
+        	}
+        }
+		// HEALTH UPDATE
+		if (life <= 0) {
+			System.exit(0);
+		}
 	    // GET PLAYER IMAGE
 		spriteCounter++;
 		if (spriteCounter > 4) {
@@ -206,21 +237,6 @@ public class Player extends Entity {
 			} else if (isMoving == false) {
 				getPlayerIdleImage();
 			}
-		}
-		// RECOVERY UPDATE
-		recoveryCounter++;
-		if (recoveryCounter > 120) {
-			if (life < maxLife) {
-				if (energy > 0) {
-					energy--;
-					life++;
-				}
-			}
-			recoveryCounter = 0;
-		}
-		// HEALTH UPDATE
-		if (life <= 0) {
-			System.exit(0);
 		}
 	}
 	public void pickupObject(int i) {

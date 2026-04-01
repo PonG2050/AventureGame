@@ -71,7 +71,7 @@ public class Fox extends Entity{
 	@Override
 	public void update() {
 	    super.update();
-
+	    spriteCounter++;
 	    if (spriteCounter > 4) { 
 	        if (isMoving) {
 	            getFoxMovement();

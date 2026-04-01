@@ -15,6 +15,8 @@ public class Entity {
 	public int worldX, worldY;
 	public int speed, scale;
 	public String name;
+	public boolean monster = false;
+	public int damage = 0;
 	public boolean isMoving = false;
 	public int maxLife;
 	public int life;
@@ -52,10 +54,17 @@ public class Entity {
 	}
 	public void update() {
 	    action();
-
 	    collisionOn = false;
 	    gp.cChecker.checkTile(this);
 	    gp.cChecker.checkObject(this, false);
+	    gp.cChecker.checkEntity(this, gp.monster);
+	    gp.cChecker.checkEntity(this, gp.animal);
+        if (gp.cChecker.checkPlayer(this)) {
+        	if (gp.player.invincible == false) {
+	         	gp.player.life -= this.damage;
+	         	gp.player.invincible = true;
+        	}
+        }
 
 	    if (isMoving && !collisionOn) {
 	        switch (direction) {
@@ -65,8 +74,6 @@ public class Entity {
 	            case "right": worldX += speed; break;
 	        }
 	    }
-
-	    spriteCounter++;
 	}
 	public void draw(Graphics2D g2) {
 		

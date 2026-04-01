@@ -10,7 +10,6 @@ import java.util.Random;
 import javax.imageio.ImageIO;
 
 import Main.GamePanel;
-import Main.KeyHandler;
 import entity.Entity;
 
 public class Skeleton extends Entity{
@@ -80,7 +79,8 @@ public class Skeleton extends Entity{
 	@Override
 	public void update() {
 	    super.update();
-
+	    // GET SOURCES
+	    spriteCounter++;
 	    if (spriteCounter > 4) { 
 	        if (isMoving) {
 	            getSkeletonMovement();
@@ -90,7 +90,7 @@ public class Skeleton extends Entity{
 	        spriteCounter = 0;
 	    }
 	}
-
+	@Override
 	public void action() {
 	    actionLockCounter++;
 	    int randomInterval = 24 + new Random().nextInt(64);

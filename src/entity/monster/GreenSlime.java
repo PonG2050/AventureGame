@@ -15,6 +15,8 @@ public class GreenSlime extends Entity{
 	
 	public GreenSlime(GamePanel gp) {
 		super(gp);
+		monster = true;
+		damage = 1;
 		height = 64;
 		width = 64;
 		direction = "idle";
@@ -43,9 +45,9 @@ public class GreenSlime extends Entity{
 	}
 	public void update() {
         super.update();
-
+        // GET SOURCES	
         spriteCounter++;
-        if (spriteCounter > 20) {
+        if (spriteCounter > 10) {
             if (isMoving) {
                 row = 1;
                 col++;
@@ -74,7 +76,7 @@ public class GreenSlime extends Entity{
             spriteCounter = 0;
         }
 	}
-
+	@Override
 	public void action() {
 	    actionLockCounter++;
 	    int randomInterval = 60 + new Random().nextInt(60);
@@ -94,10 +96,8 @@ public class GreenSlime extends Entity{
 	    }
 	}
 	public void draw(Graphics2D g2) {
-	    
 	    int screenX = worldX - gp.player.worldX + gp.player.screenX;
 	    int screenY = worldY - gp.player.worldY + gp.player.screenY;
-
 	    if (isOnScreen()) {
 	        
 	        g2.drawImage(image, screenX, screenY, gp.tileSize * scale, gp.tileSize * scale, null);
