@@ -119,7 +119,6 @@ public class GreenSlime extends Entity{
 			g2.setColor(new Color(255, 0, 30));
 			g2.fillRect(screenX + solidArea.x, screenY + gp.tileSize/4, hpBarValue, barHeight);
 
-	    }
-	    
+	    }	    
 	}
 }

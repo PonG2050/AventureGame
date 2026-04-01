@@ -9,9 +9,11 @@ import javax.imageio.ImageIO;
 import Main.GamePanel;
 
 public class UIInventory extends UIComponent{
-	BufferedImage hotbar;
+	BufferedImage hotbar, cursor, cursorSheet;
 	// ORGINAL SIZE OF HOTBAR
 	int hotbarWidth = 120, hotbarHeight = 28;
+	int cursorWidth = 16 * 3, cursorHeight = 16 * 3;
+	int[] slotList;
 	public UIInventory(GamePanel gp) {
 		super(gp, gp.screenWidth/2 - 256, gp.screenHeight/2 - 256, 256*2, 256*2);
 		setDefaultValue();
@@ -21,14 +23,13 @@ public class UIInventory extends UIComponent{
 			
 			image = ImageIO.read(getClass().getResourceAsStream("/UI/UI_Inventory.png"));
 			hotbar = image.getSubimage(108, 154, hotbarWidth, hotbarHeight);
+			cursorSheet = ImageIO.read(getClass().getResourceAsStream("/UI/UI_Selectors.png"));
+			cursor = cursorSheet.getSubimage(0, 39 * 16, 3 * 16, 3 * 16);
 			
 		} catch(IOException e) {
 			e.printStackTrace();
 		}
 	}
-	
-	
-	
 	
 	@Override
 	public void update() {
@@ -37,9 +38,15 @@ public class UIInventory extends UIComponent{
 	}
 	@Override
 	public void draw(Graphics2D g2) {
-		g2.drawImage(hotbar, gp.screenWidth/2 - (hotbarWidth * gp.scale)/2, gp.screenHeight - gp.tileSize * 2, hotbarWidth * gp.scale, hotbarHeight * gp.scale, null);
+		int hotbarScreenX = gp.screenWidth/2 - (hotbarWidth * gp.scale)/2;
+		int hotbarScreenY = gp.screenHeight - gp.tileSize * 2;
+		int spacing = 23 * gp.scale;
+		int cursorScreenX = hotbarScreenX - gp.tileSize/2 - 2 * gp.scale + (gp.keyH.slot - 1) * spacing;
+		int cursorScreenY = hotbarScreenY - gp.tileSize/2 - 2 * gp.scale;
+		g2.drawImage(hotbar, hotbarScreenX, hotbarScreenY, hotbarWidth * gp.scale, hotbarHeight * gp.scale, null);
 		if (gp.keyH.E == true) {
 			g2.drawImage(image, x, y, width, height, null);
 		}
+		g2.drawImage(cursor, cursorScreenX, cursorScreenY, cursorWidth * gp.scale, cursorHeight * gp.scale, null);
 	}
 }

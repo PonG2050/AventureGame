@@ -22,6 +22,7 @@ public class Player extends Entity {
 	KeyHandler keyH;
 	MouseListener mouseL;
 
+	BufferedImage playerMovement, playerAttack;
 	public final int screenX;
 	public final int screenY;
 	public int keyCount = 0;
@@ -32,6 +33,7 @@ public class Player extends Entity {
 	public boolean invincible = false;
 	private int invincibleCounter = 0;
 	private int recoveryCounter = 0;
+	private boolean isAttacking = false;
 	public Player(GamePanel gp, KeyHandler keyH, MouseListener mouseL) {
 
 		super(gp);
@@ -76,14 +78,15 @@ public class Player extends Entity {
 	// GET IMAGE METHODS
 	public void getPlayerImage() {
 		try {
-			sheet = ImageIO.read(getClass().getResourceAsStream("/player/Player_sheet.png"));
-			image = sheet.getSubimage(0, 0, width, height);
+			playerMovement = ImageIO.read(getClass().getResourceAsStream("/player/Player_Idle_Run_Death_Anim.png"));
+			playerAttack = ImageIO.read(getClass().getResourceAsStream("/player/Player_Attack_Anim.png"));
+			image = playerMovement.getSubimage(0, 0, width, height);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
 	}
-	public BufferedImage getPlayerSubImage(int row, int maxCol) {
+	public BufferedImage getPlayerSubImage(BufferedImage sheet, int row, int maxCol) {
 	    if (col > maxCol) {
 	        col = 0;
 	    }
@@ -97,29 +100,38 @@ public class Player extends Entity {
 	}
 	public void getPlayerIdleImage() {
 		switch (direction) {
-		case "up":image = getPlayerSubImage(7, 5);break;
-		case "down":image = getPlayerSubImage(0, 5);break;
-		case "right":image = getPlayerSubImage(2, 5);break;
-		case "left":image = getPlayerSubImage(4, 5);break;
-		case "idle":image = getPlayerSubImage(0, 5);break;
+		case "up":image = getPlayerSubImage(playerMovement, 2, 5);break;
+		case "down":image = getPlayerSubImage(playerMovement, 0, 5);break;
+		case "right":image = getPlayerSubImage(playerMovement, 1, 5);break;
+		case "left":image = getPlayerSubImage(playerMovement, 1, 5);break;
+		case "idle":image = getPlayerSubImage(playerMovement, 0, 5);break;
 		}
 	}
 	public void getPlayerMovementImage() {
 		switch (direction) {
-		case "up":image = getPlayerSubImage(6, 5);break;
-		case "down":image = getPlayerSubImage(1, 5);break;
-		case "right":image = getPlayerSubImage(3, 5);break;
-		case "left":image = getPlayerSubImage(5, 5);break;
+		case "up":image = getPlayerSubImage(playerMovement, 5, 5);break;
+		case "down":image = getPlayerSubImage(playerMovement, 3, 5);break;
+		case "right":image = getPlayerSubImage(playerMovement, 4, 5);break;
+		case "left":image = getPlayerSubImage(playerMovement, 4, 5);break;
 		}
 	}
 	public void getPlayerActionImage() {
-		if (mouseL.leftClick == true) {
+		if (gp.mouseL.leftClick == true) {
 			switch (direction) {
-			case "up":image = getPlayerSubImage(11, 3);break;
-			case "down":image = getPlayerSubImage(8, 3);break;
-			case "right":image = getPlayerSubImage(9, 3);break;
-			case "left":image = getPlayerSubImage(10, 3);break;
+			case "up":image = getPlayerSubImage(playerAttack, 6, 3);break;
+			case "down":image = getPlayerSubImage(playerAttack, 0, 3);break;
+			case "right":image = getPlayerSubImage(playerAttack, 3, 3);break;
+			case "left":image = getPlayerSubImage(playerAttack, 3, 3);break;
 			}
+		}
+		if (invincible == true) {
+			switch (direction) {
+			case "up":image = getPlayerSubImage(playerMovement, 9, 3);break;
+			case "down":image = getPlayerSubImage(playerMovement, 7, 3);break;
+			case "right":image = getPlayerSubImage(playerMovement, 8, 3);break;
+			case "left":image = getPlayerSubImage(playerMovement, 8, 3);break;
+			}
+			spriteCounter += 2;
 		}
 	}
 	// UPDATE METHOD - DONT USE SUPER UPDATE
@@ -217,7 +229,7 @@ public class Player extends Entity {
 		// INVINCIBLE UPDATE
         if (invincible == true) {
         	invincibleCounter++;
-        	if (invincibleCounter > 60) {
+        	if (invincibleCounter > 30) {
         		invincible = false;
         		invincibleCounter = 0;
         	}
@@ -230,12 +242,18 @@ public class Player extends Entity {
 		spriteCounter++;
 		if (spriteCounter > 4) {
 			spriteCounter = 0;
-			if (mouseL.leftClick == true) {
-				getPlayerActionImage();
-			} else if (isMoving){
+			
+			if (isMoving){
 				getPlayerMovementImage();
-			} else if (isMoving == false) {
-				getPlayerIdleImage();
+			} else getPlayerIdleImage();
+
+			getPlayerActionImage();
+		}
+	}
+	public void isAttacking() {
+		if (gp.mouseL.leftClick) {
+			if (isAttacking == false) {
+				isAttacking = true;
 			}
 		}
 	}
@@ -271,8 +289,13 @@ public class Player extends Entity {
 	}
 	public void draw(Graphics2D g2) {
 		
-		g2.drawImage(image, screenX, screenY, gp.tileSize * playerScale, gp.tileSize * playerScale, null);
-		
+	    int drawSize = gp.tileSize * playerScale;
+
+	    if (direction.equals("left")) {
+	        g2.drawImage(image, screenX + drawSize, screenY, -drawSize, drawSize, null);
+	    } else {
+	        g2.drawImage(image, screenX, screenY, drawSize, drawSize, null);
+	    }		
 		if (keyH.HitBox == true) {
 			g2.setColor(Color.white);
 			// DRAW HITBOX
