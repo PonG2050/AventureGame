@@ -28,8 +28,11 @@ public class Fox extends Entity{
 		solidArea.width = gp.tileSize * 7 / 8;
 		solidArea.x = width / 2 * scale - solidArea.width / 2;
 		solidArea.y = height * scale - solidArea.height;
+		
 		solidAreaDefaultX = solidArea.x;
 		solidAreaDefaultY = solidArea.y;
+		solidAreaDefaultWidth = solidArea.width;
+		solidAreaDefaultHeight = solidArea.height;
 		
 		getFoxImage();
 	}

@@ -183,11 +183,11 @@ public class CollisionCheck {
 		}
 		return index;
 	}
+	// HAVE TO RESET THE SOLID AREA VALUE TO CHECK THE ENTITY'S ATTACK BETTER
 	public boolean checkPlayer(Entity entity) {
 		boolean contactPlayer = false;
 		entity.solidArea.x += entity.worldX;
 		entity.solidArea.y += entity.worldY;
-		
 		gp.player.solidArea.x += gp.player.worldX;
 		gp.player.solidArea.y += gp.player.worldY;
 		

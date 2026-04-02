@@ -23,7 +23,7 @@ public class Entity {
 	public int recovery = 60;
 	
 	public Rectangle solidArea;
-	public int solidAreaDefaultX, solidAreaDefaultY;
+	public int solidAreaDefaultX, solidAreaDefaultY, solidAreaDefaultWidth, solidAreaDefaultHeight;
 	public boolean collisionOn = false, collision = false;
 	public String direction;
 	public int spriteCounter = 0;

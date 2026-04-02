@@ -30,8 +30,11 @@ public class GreenSlime extends Entity{
 		solidArea.width = gp.tileSize * 2 / 3;
 		solidArea.x = (width * gp.scale/scale)/2 - solidArea.width/2;
 		solidArea.y = (height * gp.scale/scale)/2 - solidArea.height/2;
+		
 		solidAreaDefaultX = solidArea.x;
 		solidAreaDefaultY = solidArea.y;
+		solidAreaDefaultWidth = solidArea.width;
+		solidAreaDefaultHeight = solidArea.height;
 		
 		getGreenSlimeImage();
 	}

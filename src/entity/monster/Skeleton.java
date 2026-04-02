@@ -31,8 +31,11 @@ public class Skeleton extends Entity{
 		solidArea.y = 10 * totalScale;
 		solidArea.width = 4 * totalScale;
 		solidArea.height = 1 * totalScale;
+		
 		solidAreaDefaultX = solidArea.x;
 		solidAreaDefaultY = solidArea.y;
+		solidAreaDefaultWidth = solidArea.width;
+		solidAreaDefaultHeight = solidArea.height;
 		
 		getSkeletonImage();
 	}
