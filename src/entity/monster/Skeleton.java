@@ -23,6 +23,7 @@ public class Skeleton extends Entity{
 		scale = 2;
 		maxLife = 15;
 		life = 15;
+		damage = 2;
 		
 		int totalScale = gp.scale * scale;
 

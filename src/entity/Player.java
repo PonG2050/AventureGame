@@ -171,14 +171,19 @@ public class Player extends Entity {
 	        gp.cChecker.checkTile(this);
 	        // OBJECT COLLISION CHECK
 	        int objectIndex = gp.cChecker.checkObject(this,  true);
-	        // ENTITY COLLISION CHECK
-	        int entityIndex = gp.cChecker.checkEntity(this, gp.monster);
-	        if (entityIndex != 999) {
+	        // MONSTER COLLISION CHECK
+	        int monsterIndex = gp.cChecker.checkEntity(this, gp.monster);
+	        if (monsterIndex != 999) {
+	        	// ONLY TURN ON INVINCIBLE IF THE PLAYER GET DAMAGE
 	        	if (invincible == false) {
-		        	life -= gp.monster[entityIndex].damage;
-	        		invincible = true;
+	        		if (gp.monster[monsterIndex].damage != 0) {
+			        	life -= gp.monster[monsterIndex].damage;
+		        		invincible = true;
+	        		}
 	        	}
 	        }
+	        // CHECK ANIMAL COLLISION
+	        int animalIndex = gp.cChecker.checkEntity(this, gp.animal);
 	        // ACTION CHECK
 	        pickupObject(objectIndex);
 	        interactObject(objectIndex);
@@ -199,13 +204,18 @@ public class Player extends Entity {
 	        // OBJECT COLLISION CHECK
 	        int objectIndex = gp.cChecker.checkObject(this,  true);
 	        // ENTITY COLLISION CHECK
-	        int entityIndex = gp.cChecker.checkEntity(this, gp.monster);
-	        if (entityIndex != 999) {
+	        int monsterIndex = gp.cChecker.checkEntity(this, gp.monster);
+	        if (monsterIndex != 999) {
+	        	// ONLY TURN ON INVINCIBLE IF THE PLAYER GET DAMAGE
 	        	if (invincible == false) {
-		        	life -= gp.monster[entityIndex].damage;
-	        		invincible = true;
+	        		if (gp.monster[monsterIndex].damage != 0) {
+			        	life -= gp.monster[monsterIndex].damage;
+		        		invincible = true;
+	        		}
 	        	}
 	        }
+	        // CHECK ANIMAL COLLISION
+	        int animalIndex = gp.cChecker.checkEntity(this, gp.animal);
 	        // ACTION CHECK
 	        pickupObject(objectIndex);
 	        interactObject(objectIndex);

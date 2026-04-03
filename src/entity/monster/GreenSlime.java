@@ -16,7 +16,6 @@ public class GreenSlime extends Entity{
 	public GreenSlime(GamePanel gp) {
 		super(gp);
 		monster = true;
-		damage = 1;
 		height = 64;
 		width = 64;
 		direction = "idle";
@@ -24,6 +23,7 @@ public class GreenSlime extends Entity{
 		scale = 2;
 		maxLife = 5;
 		life = 5;
+		damage = 1;
 		
 		solidArea = new Rectangle();
 		solidArea.height = gp.tileSize * 2 / 3;
